@@ -1,0 +1,5247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Học liệu số Toán 10: Bất phương trình & Hệ BPT bậc nhất hai ẩn</title>
+  <style>
+    :root {
+      --bg-app: #f1f5f9;
+      --bg-panel: #ffffff;
+      --bg-subtle: #f8fafc;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #dbeafe;
+      --primary-soft: #eff6ff;
+      --secondary: #4f46e5;
+      --accent-amber: #d97706;
+      --accent-amber-bg: #fffbeb;
+      --success: #059669;
+      --success-bg: #ecfdf5;
+      --success-border: #a7f3d0;
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --danger-border: #fecaca;
+      --text-main: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --font-sans: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      --font-math: 'Cambria Math', 'Times New Roman', Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .app-header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-md);
+      z-index: 20;
+      flex-shrink: 0;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .app-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .app-subtitle {
+      font-size: 0.82rem;
+      color: #dbeafe;
+      font-weight: 400;
+    }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+    }
+
+    .phase-pill {
+      background: rgba(16, 185, 129, 0.25);
+      border: 1px solid rgba(167, 243, 208, 0.5);
+      color: #ecfdf5;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .phase-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px #34d399;
+    }
+
+    /* Main 2-Column Layout */
+    .app-main {
+      display: grid;
+      grid-template-columns: 450px 1fr;
+      flex: 1;
+      min-height: 0;
+      min-width: 0;
+      gap: 12px;
+      padding: 12px;
+    }
+
+    /* Left Column: Control Panel */
+    .control-column {
+      background: var(--bg-panel);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 0;
+      min-width: 0;
+    }
+
+    .mode-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 6px;
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--border);
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .mode-tab-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.87rem;
+      font-weight: 600;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .mode-tab-btn:hover {
+      color: var(--primary);
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    .mode-tab-btn.active {
+      background: var(--bg-panel);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Thanh tiến trình trực quan 4 bước cố định ở đầu cột trái */
+    .top-flow-stepper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+
+    .flow-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text-muted);
+      font-size: 0.69rem;
+      font-weight: 600;
+      line-height: 1.25;
+      white-space: normal;
+      text-align: center;
+      flex: 1 1 0;
+      justify-content: center;
+      min-width: 0;
+      transition: all 0.18s ease;
+    }
+
+    #flowStepInput {
+      flex: 0 0 auto;
+      padding: 4px 8px;
+    }
+
+    .flow-step-text {
+      display: block;
+    }
+
+    .flow-step.active {
+      background: var(--primary-soft);
+      border-color: #93c5fd;
+      color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+    }
+
+    .flow-step.completed {
+      background: var(--success-bg);
+      border-color: var(--success-border);
+      color: var(--success);
+    }
+
+    .flow-step.optional-step {
+      opacity: 0.48;
+      border-style: dashed;
+    }
+
+    .flow-arrow {
+      color: #94a3b8;
+      font-size: 0.72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .panel-scroll {
+      padding: 12px 14px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Thanh Ví dụ mẫu nhanh Toán 10 */
+    .quick-examples-bar {
+      background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      flex-shrink: 0;
+    }
+
+    .quick-examples-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 7px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+
+    .quick-examples-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .quick-example-btn {
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      border-radius: var(--radius-sm);
+      padding: 6px 8px;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transition: all 0.16s ease;
+    }
+
+    .quick-example-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .qe-tag {
+      font-size: 0.69rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .qe-math {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    /* Cards inside Left Panel */
+    .section-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s ease;
+    }
+
+    .section-card.active-card {
+      border-color: #93c5fd;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .section-title {
+      font-size: 0.93rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .step-number-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Preset pills */
+    .preset-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .preset-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-right: 2px;
+    }
+
+    .preset-chip {
+      border: 1px solid var(--border);
+      background: var(--bg-subtle);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .preset-chip:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    /* Single Inequality Input Row */
+    .ineq-input-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--bg-subtle);
+      padding: 8px 9px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      flex-wrap: nowrap;
+    }
+
+    .coeff-input-group {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .coeff-input {
+      width: 100%;
+      min-width: 40px;
+      padding: 6px 5px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+      color: var(--text-main);
+      background: #fff;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .coeff-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+
+    .coeff-input:disabled,
+    .op-select:disabled {
+      background: #f1f5f9;
+      color: #64748b;
+      cursor: not-allowed;
+    }
+
+    .math-var {
+      font-family: var(--font-math);
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.08rem;
+      color: var(--text-main);
+      user-select: none;
+    }
+
+    .math-plus {
+      font-weight: 700;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      user-select: none;
+    }
+
+    .op-select {
+      padding: 6px 5px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .op-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+
+    /* System Inequality Editor Rows */
+    .system-rows-container {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .sys-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--bg-subtle);
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .sys-row.active-sys-row {
+      border-color: var(--primary);
+      background: #f0f7ff;
+    }
+
+    .sys-row.done-sys-row {
+      border-color: var(--success-border);
+      background: #f4fdf8;
+    }
+
+    .sys-row-badge {
+      min-width: 28px;
+      height: 24px;
+      border-radius: 6px;
+      color: #ffffff;
+      font-size: 0.74rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .sys-delete-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: #64748b;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+
+    .sys-delete-btn:hover:not(:disabled) {
+      background: #fee2e2;
+      border-color: #fca5a5;
+      color: #dc2626;
+    }
+
+    .sys-delete-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* System Execution Progress Strip */
+    .system-progress-strip {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      padding: 10px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+    }
+
+    .system-progress-strip.show {
+      display: flex;
+    }
+
+    .sys-progress-title {
+      font-size: 0.79rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sys-progress-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .sys-chip-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text-secondary);
+    }
+
+    .sys-chip-item.current {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+    }
+
+    .sys-chip-item.done {
+      border-color: var(--success-border);
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .sys-chip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Live Equation Preview */
+    .equation-preview-box {
+      margin-top: 10px;
+      padding: 9px 12px;
+      background: var(--primary-soft);
+      border: 1px dashed #93c5fd;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.86rem;
+    }
+
+    .equation-preview-label {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .equation-preview-math {
+      font-family: var(--font-math);
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #1e40af;
+      letter-spacing: 0.02em;
+    }
+
+    /* Buttons */
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 8px 13px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      flex: 1;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: #ffffff;
+      flex: 1;
+      box-shadow: 0 2px 4px rgba(5, 150, 105, 0.22);
+    }
+
+    .btn-success:hover:not(:disabled) {
+      background: #047857;
+      transform: translateY(-1px);
+    }
+
+    .btn-danger-outline {
+      background: #fff1f2;
+      color: #be123c;
+      border: 1.5px solid #fda4af;
+      flex: 1;
+    }
+
+    .btn-danger-outline:hover:not(:disabled) {
+      background: #ffe4e6;
+      border-color: #fb7185;
+      transform: translateY(-1px);
+    }
+
+    .btn-success-outline {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1.5px solid #6ee7b7;
+      flex: 1;
+    }
+
+    .btn-success-outline:hover:not(:disabled) {
+      background: #d1fae5;
+      border-color: #34d399;
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* Alert / Feedback Boxes */
+    .feedback-box {
+      margin-top: 9px;
+      padding: 9px 11px;
+      border-radius: var(--radius-sm);
+      font-size: 0.83rem;
+      line-height: 1.48;
+      display: none;
+    }
+
+    .feedback-box.show {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .feedback-error {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: #991b1b;
+    }
+
+    .feedback-success {
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: #065f46;
+    }
+
+    .feedback-info {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: #92400e;
+    }
+
+    .math-calc-line {
+      margin-top: 6px;
+      padding: 6px 9px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 6px;
+      font-family: var(--font-math);
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    /* Step Progress Bar (ẩn hiển thị vì đã có #topFlowStepper trực quan ở đầu cột trái; giữ DOM tương thích) */
+    .steps-progress {
+      display: none !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .steps-progress.three-steps {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .step-pill {
+      padding: 7px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-subtle);
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .step-pill.active {
+      background: var(--primary-soft);
+      border-color: #93c5fd;
+      color: var(--primary);
+    }
+
+    .step-pill.completed {
+      background: var(--success-bg);
+      border-color: var(--success-border);
+      color: var(--success);
+    }
+
+    .step-pill-dot {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      color: #fff;
+      font-size: 0.68rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-pill.active .step-pill-dot {
+      background: var(--primary);
+    }
+
+    .step-pill.completed .step-pill-dot {
+      background: var(--success);
+    }
+
+    /* Step Guide Banners */
+    .guide-banner {
+      background: #f8fafc;
+      border-left: 3.5px solid var(--primary);
+      padding: 10px 12px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.83rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      margin-bottom: 11px;
+    }
+
+    .guide-banner.amber-banner {
+      border-left-color: #d97706;
+      background: #fffbeb;
+      color: #78350f;
+    }
+
+    .guide-banner.emerald-banner {
+      border-left-color: #059669;
+      background: #ecfdf5;
+      color: #065f46;
+    }
+
+    .guide-banner strong {
+      color: var(--text-main);
+    }
+
+    .line-style-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .tag-solid {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .tag-dashed {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    /* Point Selection Cards */
+    .point-box {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 11px;
+      background: #ffffff;
+      margin-bottom: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .point-box.active-point {
+      border-color: var(--primary);
+      background: #f8fbff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+    }
+
+    .point-box.active-test-point {
+      border-color: #d97706;
+      background: #fffdf7;
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+    }
+
+    .point-box.completed-point {
+      border-color: var(--success-border);
+      background: #f6fef9;
+    }
+
+    .point-box.locked-point {
+      opacity: 0.55;
+      background: #f8fafc;
+      pointer-events: none;
+    }
+
+    .point-box-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      gap: 6px;
+    }
+
+    .point-title {
+      font-size: 0.86rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .point-marker-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .marker-a { background: #2563eb; }
+    .marker-b { background: #7c3aed; }
+    .marker-m { background: #d97706; }
+    .marker-v { background: #059669; }
+
+    .point-status-tag {
+      font-size: 0.73rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .point-status-tag.done {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .point-status-tag.waiting {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .point-status-tag.waiting-amber {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .coord-inputs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .coord-field {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border: 1.5px solid var(--border-strong);
+      border-radius: 6px;
+      padding: 4px 7px;
+      transition: border-color 0.15s;
+    }
+
+    .coord-field:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+
+    .coord-label {
+      font-family: var(--font-math);
+      font-style: italic;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-right: 5px;
+      font-size: 0.92rem;
+      user-select: none;
+    }
+
+    .coord-input {
+      border: none;
+      width: 100%;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-main);
+      background: transparent;
+      padding: 3px 0;
+    }
+
+    .coord-input:focus {
+      outline: none;
+    }
+
+    .hint-text {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .quick-origin-btn {
+      border: 1px solid #f59e0b;
+      background: #fffbeb;
+      color: #b45309;
+      font-size: 0.73rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .quick-origin-btn:hover {
+      background: #fef3c7;
+      border-color: #d97706;
+    }
+
+    .step1-compact-done {
+      display: none;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius-sm);
+      padding: 9px 11px;
+      margin-bottom: 10px;
+      font-size: 0.81rem;
+      color: #166534;
+    }
+
+    .step1-compact-done.show {
+      display: block;
+    }
+
+    /* Step 2 Verification & Confirmation Box */
+    .step2-section {
+      display: none;
+      margin-top: 8px;
+      padding-top: 11px;
+      border-top: 1.5px dashed var(--border-strong);
+    }
+
+    .step2-section.show {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .substitution-card {
+      display: none;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 11px;
+      margin-top: 10px;
+    }
+
+    .substitution-card.show {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .sub-card-title {
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .sub-expression-display {
+      background: #ffffff;
+      border: 1px solid #93c5fd;
+      border-radius: 7px;
+      padding: 9px 12px;
+      text-align: center;
+      font-family: var(--font-math);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin: 7px 0;
+      letter-spacing: 0.02em;
+    }
+
+    .sub-question-prompt {
+      font-size: 0.81rem;
+      color: var(--text-secondary);
+      margin-bottom: 9px;
+      line-height: 1.45;
+    }
+
+    .confirm-btns-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .final-complete-card {
+      display: none;
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border: 1.5px solid #34d399;
+      border-radius: var(--radius-md);
+      padding: 13px;
+      margin-top: 11px;
+    }
+
+    .final-complete-card.show {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .complete-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #065f46;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 6px;
+    }
+
+    .complete-summary {
+      font-size: 0.83rem;
+      color: #065f46;
+      line-height: 1.5;
+    }
+
+    /* ================================================================
+       BƯỚC 3: ĐA GIÁC MIỀN NGHIỆM & TÌM TỌA ĐỘ ĐỈNH
+       ================================================================ */
+    .step3-section {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .step3-section.show {
+      display: block;
+    }
+
+    .step3-result-banner {
+      padding: 13px;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      line-height: 1.52;
+      margin-bottom: 12px;
+    }
+
+    .step3-result-banner.case-empty {
+      background: #fef2f2;
+      border: 1.5px solid #f87171;
+      color: #991b1b;
+    }
+
+    .step3-result-banner.case-unbounded {
+      background: #fffbeb;
+      border: 1.5px solid #fbbf24;
+      color: #92400e;
+    }
+
+    .step3-result-banner.case-bounded {
+      background: #ecfdf5;
+      border: 1.5px solid #34d399;
+      color: #065f46;
+    }
+
+    .vertex-table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .vertex-table-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .vertex-progress-badge {
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      white-space: nowrap;
+    }
+
+    .vertex-progress-badge.all-done {
+      background: var(--success-bg);
+      color: var(--success);
+      border-color: var(--success-border);
+    }
+
+    .vertex-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .vertex-card {
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 11px;
+      background: #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .vertex-card.verified {
+      border-color: #34d399;
+      background: #f4fdf8;
+    }
+
+    .vertex-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      gap: 8px;
+    }
+
+    .vertex-name-group {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 700;
+      font-size: 0.87rem;
+      color: var(--text-main);
+    }
+
+    .vertex-eq-pair {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 9px;
+      font-family: var(--font-math);
+      font-size: 0.88rem;
+      color: #1e293b;
+      margin-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .vertex-eq-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .vertex-all-done-card {
+      display: none;
+      margin-top: 12px;
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border: 1.5px solid #10b981;
+      border-radius: var(--radius-md);
+      padding: 13px;
+      color: #065f46;
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+
+    .vertex-all-done-card.show {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    /* Right Column: Coordinate Plane Canvas */
+    .canvas-column {
+      background: var(--bg-panel);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      overflow: hidden;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #coordCanvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+    }
+
+    #coordCanvas.picking-mode {
+      cursor: crosshair;
+    }
+
+    #coordCanvas.dragging {
+      cursor: grabbing !important;
+    }
+
+    /* Floating Top-Left Status Overlay on Canvas */
+    .canvas-top-left {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      max-width: calc(100% - 260px);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .canvas-status-pill {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--border-strong);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      box-shadow: var(--shadow-md);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .status-pulse.picking {
+      background: #f59e0b;
+      animation: pulseRing 1.4s infinite;
+    }
+
+    .status-pulse.done {
+      background: var(--success);
+    }
+
+    .status-pulse.error {
+      background: var(--danger);
+    }
+
+    /* Floating Top-Right Toolbar on Canvas */
+    .canvas-toolbar {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--border-strong);
+      padding: 6px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      z-index: 10;
+    }
+
+    .tool-btn {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 7px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .tool-btn:hover {
+      background: var(--bg-subtle);
+      color: var(--primary);
+      border-color: var(--border);
+    }
+
+    .tool-btn-icon {
+      width: 34px;
+      padding: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .toolbar-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+    }
+
+    /* Floating Bottom Bar on Canvas */
+    .canvas-bottom-bar {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+      z-index: 10;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .canvas-legend {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      pointer-events: auto;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 500;
+    }
+
+    .legend-line-solid {
+      width: 18px;
+      height: 3px;
+      background: #2563eb;
+      border-radius: 2px;
+    }
+
+    .legend-line-dashed {
+      width: 18px;
+      height: 0;
+      border-top: 3px dashed #2563eb;
+    }
+
+    .legend-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #2563eb;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1.5px #2563eb;
+    }
+
+    .legend-dot-m {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #d97706;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1.5px #d97706;
+    }
+
+    .legend-hatch-swatch {
+      width: 15px;
+      height: 11px;
+      border: 1px solid #e11d48;
+      border-radius: 3px;
+      background: repeating-linear-gradient(
+        -45deg,
+        rgba(225, 29, 72, 0.12),
+        rgba(225, 29, 72, 0.12) 2px,
+        rgba(225, 29, 72, 0.45) 2px,
+        rgba(225, 29, 72, 0.45) 3.5px
+      );
+    }
+
+    .legend-poly-swatch {
+      width: 15px;
+      height: 11px;
+      border: 1.5px solid #059669;
+      border-radius: 3px;
+      background: rgba(16, 185, 129, 0.22);
+    }
+
+    .cursor-coord-box {
+      background: rgba(15, 23, 42, 0.85);
+      color: #f8fafc;
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-size: 0.79rem;
+      font-weight: 600;
+      font-family: 'Consolas', 'Courier New', monospace;
+      box-shadow: var(--shadow-sm);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); }
+      70% { box-shadow: 0 0 0 7px rgba(245, 158, 11, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+    }
+
+    /* Tối ưu cho Laptop 1366x768 và màn hình trung bình (1201px - 1440px) */
+    @media (max-width: 1440px) {
+      .app-header {
+        padding: 7px 16px;
+      }
+      .app-title {
+        font-size: 1.03rem;
+      }
+      .app-subtitle {
+        font-size: 0.77rem;
+      }
+      .app-main {
+        grid-template-columns: 420px 1fr;
+        gap: 10px;
+        padding: 10px;
+      }
+      .section-card {
+        padding: 11px 12px;
+      }
+      .canvas-top-left {
+        max-width: calc(100% - 235px);
+      }
+    }
+
+    /* Tối ưu cho Máy chiếu lớp học (1024x768, 1280x720) */
+    @media (max-width: 1200px) {
+      .header-meta {
+        display: none;
+      }
+      .app-main {
+        grid-template-columns: 385px 1fr;
+        gap: 9px;
+        padding: 9px;
+      }
+      .panel-scroll {
+        padding: 10px 11px;
+        gap: 10px;
+      }
+      .canvas-top-left {
+        top: 10px;
+        left: 10px;
+        max-width: calc(100% - 210px);
+      }
+      .canvas-status-pill {
+        padding: 6px 11px;
+        font-size: 0.76rem;
+      }
+      .canvas-toolbar {
+        top: 10px;
+        right: 10px;
+        padding: 4px;
+        gap: 4px;
+      }
+      .tool-btn {
+        height: 30px;
+        padding: 0 8px;
+        font-size: 0.76rem;
+      }
+      .tool-btn-icon {
+        width: 30px;
+      }
+      .canvas-bottom-bar {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+      }
+      .canvas-legend {
+        padding: 5px 10px;
+        gap: 8px;
+        font-size: 0.72rem;
+      }
+      .cursor-coord-box {
+        padding: 5px 10px;
+        font-size: 0.74rem;
+      }
+    }
+
+    /* Tối ưu chiều cao cho Laptop 1366x768 & Máy chiếu 768px/720px */
+    @media (max-height: 780px) {
+      .app-header {
+        padding: 6px 16px;
+      }
+      .app-subtitle {
+        font-size: 0.75rem;
+      }
+      .mode-tab-btn {
+        padding: 7px 10px;
+        font-size: 0.84rem;
+      }
+      .top-flow-stepper {
+        padding: 6px 10px;
+      }
+      .flow-step {
+        padding: 3px 5px;
+        font-size: 0.68rem;
+      }
+      .panel-scroll {
+        padding: 10px 12px;
+        gap: 9px;
+      }
+      .quick-examples-bar {
+        padding: 8px 10px;
+      }
+      .quick-example-btn {
+        padding: 5px 7px;
+      }
+      .section-card {
+        padding: 10px 11px;
+      }
+      .section-header {
+        margin-bottom: 8px;
+      }
+      .btn {
+        padding: 7px 11px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      body {
+        height: auto;
+        overflow: auto;
+      }
+      .app-main {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      .canvas-column {
+        height: 560px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="brand-group">
+      <span class="brand-badge">Toán 10 • Chương II</span>
+      <div>
+        <h1 class="app-title">Bất phương trình & Hệ bất phương trình bậc nhất hai ẩn</h1>
+        <p class="app-subtitle">Học liệu số tương tác trực quan — Biểu diễn miền nghiệm & tìm đỉnh đa giác trên mặt phẳng Oxy</p>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="phase-pill">
+        <span class="phase-dot"></span>
+        <span id="headerPhaseBadge">Bước 1 → Bước 2 → Bước 3 (Hệ BPT)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content: 2 Columns -->
+  <main class="app-main">
+    <!-- Left Column: Control Panel -->
+    <aside class="control-column" aria-label="Bảng điều khiển và hướng dẫn">
+      <!-- Mode Switcher Tabs -->
+      <div class="mode-tabs" role="tablist">
+        <button id="tabSingleBtn" class="mode-tab-btn active" role="tab" aria-selected="true" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="20" x2="20" y2="4"></line></svg>
+          Bất phương trình đơn
+        </button>
+        <button id="tabSystemBtn" class="mode-tab-btn" role="tab" aria-selected="false" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="18" x2="20" y2="6"></line><line x1="4" y1="8" x2="18" y2="20"></line></svg>
+          Hệ bất phương trình
+        </button>
+      </div>
+
+      <!-- Thanh tiến trình trực quan 4 bước ở đầu cột trái -->
+      <nav id="topFlowStepper" class="top-flow-stepper" aria-label="Tiến trình thực hành">
+        <div id="flowStepInput" class="flow-step active">
+          <span class="flow-step-text">Nhập đề</span>
+        </div>
+        <span class="flow-arrow" aria-hidden="true">&rarr;</span>
+        <div id="flowStep1" class="flow-step">
+          <span class="flow-step-text">Bước 1: Vẽ đường thẳng</span>
+        </div>
+        <span class="flow-arrow" aria-hidden="true">&rarr;</span>
+        <div id="flowStep2" class="flow-step">
+          <span class="flow-step-text">Bước 2: Thử điểm &amp; Gạch miền</span>
+        </div>
+        <span class="flow-arrow" aria-hidden="true">&rarr;</span>
+        <div id="flowStep3" class="flow-step optional-step">
+          <span class="flow-step-text">Bước 3: Xác định đỉnh đa giác</span>
+        </div>
+      </nav>
+
+      <div class="panel-scroll" id="leftPanelScroll">
+        <!-- Thanh Ví dụ mẫu nhanh kinh điển Toán 10 -->
+        <section id="quickExamplesBar" class="quick-examples-bar" aria-label="Ví dụ mẫu nhanh Toán 10">
+          <div class="quick-examples-header">
+            <span>⚡ Ví dụ mẫu nhanh (Toán 10)</span>
+            <span style="font-size: 0.71rem; font-weight: 500; color: #475569;">Bấm để thực hành ngay</span>
+          </div>
+          <div class="quick-examples-grid">
+            <button type="button" class="quick-example-btn" data-example="singleClassic">
+              <span class="qe-tag">BPT đơn</span>
+              <span class="qe-math">2x − y &le; 4</span>
+            </button>
+            <button type="button" class="quick-example-btn" data-example="sysTriangle">
+              <span class="qe-tag">Hệ tam giác</span>
+              <span class="qe-math">x &ge; 0, y &ge; 0, x + y &le; 4</span>
+            </button>
+            <button type="button" class="quick-example-btn" data-example="sysQuad">
+              <span class="qe-tag">Hệ tứ giác</span>
+              <span class="qe-math">x, y &ge; 0; x+2y &le; 6; 2x+y &le; 6</span>
+            </button>
+            <button type="button" class="quick-example-btn" data-example="sysStrict">
+              <span class="qe-tag">Hệ nét đứt (&lt;)</span>
+              <span class="qe-math">x &gt; 0, y &gt; 0, x + y &lt; 4</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- ==============================================================
+             CARD 1A: NHẬP BẤT PHƯƠNG TRÌNH ĐƠN
+             ============================================================== -->
+        <section id="singleInputCard" class="section-card active-card">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span class="step-number-badge">1</span>
+              <span>Nhập bất phương trình bậc nhất hai ẩn</span>
+            </h2>
+          </div>
+
+          <!-- Sample Presets (Single) -->
+          <div class="preset-bar">
+            <span class="preset-label">Ví dụ mẫu:</span>
+            <button type="button" class="preset-chip single-preset" data-a="2" data-b="1" data-op="<=" data-c="4">2x + y ≤ 4</button>
+            <button type="button" class="preset-chip single-preset" data-a="1" data-b="-2" data-op=">" data-c="2">x − 2y &gt; 2</button>
+            <button type="button" class="preset-chip single-preset" data-a="2" data-b="3" data-op=">=" data-c="3">2x + 3y ≥ 3</button>
+            <button type="button" class="preset-chip single-preset" data-a="1" data-b="-1" data-op="<" data-c="0">x − y &lt; 0</button>
+          </div>
+
+          <div class="ineq-input-row">
+            <div class="coeff-input-group">
+              <input id="inputA" class="coeff-input" type="text" value="2" aria-label="Hệ số a" placeholder="a" />
+              <span class="math-var">x</span>
+            </div>
+            <span class="math-plus">+</span>
+            <div class="coeff-input-group">
+              <input id="inputB" class="coeff-input" type="text" value="1" aria-label="Hệ số b" placeholder="b" />
+              <span class="math-var">y</span>
+            </div>
+            <select id="inputOp" class="op-select" aria-label="Dấu bất phương trình">
+              <option value="<=" selected>&le;</option>
+              <option value=">=">&ge;</option>
+              <option value="<">&lt;</option>
+              <option value=">">&gt;</option>
+            </select>
+            <div class="coeff-input-group">
+              <input id="inputC" class="coeff-input" type="text" value="4" aria-label="Hệ số c" placeholder="c" />
+            </div>
+          </div>
+
+          <div class="equation-preview-box">
+            <span class="equation-preview-label">Bất phương trình:</span>
+            <span id="liveInequalityPreview" class="equation-preview-math">2x + y &le; 4</span>
+          </div>
+
+          <div id="coeffFeedback" class="feedback-box" role="alert"></div>
+
+          <div class="btn-row">
+            <button id="startDrawBtn" type="button" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Bắt đầu vẽ
+            </button>
+            <button id="resetAllBtn" type="button" class="btn btn-secondary" title="Nhập lại từ đầu">
+              Nhập lại
+            </button>
+          </div>
+        </section>
+
+        <!-- ==============================================================
+             CARD 1B: QUẢN LÝ HỆ BẤT PHƯƠNG TRÌNH (2 – 6 BPT)
+             ============================================================== -->
+        <section id="systemInputCard" class="section-card active-card" style="display: none;">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span class="step-number-badge">1</span>
+              <span>Quản lý Hệ bất phương trình (2–6 BPT)</span>
+            </h2>
+            <span id="systemCountBadge" style="font-size: 0.76rem; font-weight: 700; color: var(--primary);">4 / 6 BPT</span>
+          </div>
+
+          <!-- Sample Presets (System) -->
+          <div class="preset-bar">
+            <span class="preset-label">Hệ mẫu:</span>
+            <button type="button" class="preset-chip system-preset" data-preset="triangle">Tam giác kín</button>
+            <button type="button" class="preset-chip system-preset" data-preset="quadFraction">Tứ giác (5/3)</button>
+            <button type="button" class="preset-chip system-preset" data-preset="unbounded">Không bị chặn</button>
+            <button type="button" class="preset-chip system-preset" data-preset="empty">Hệ vô nghiệm</button>
+          </div>
+
+          <!-- Dynamic List of 2..6 Inequalities -->
+          <div id="systemRowsContainer" class="system-rows-container"></div>
+
+          <div id="systemFormFeedback" class="feedback-box" role="alert"></div>
+
+          <div class="btn-row" style="margin-top: 8px;">
+            <button id="addSystemRowBtn" type="button" class="btn btn-secondary" style="font-size: 0.8rem; padding: 7px 10px;">
+              + Thêm BPT
+            </button>
+            <button id="startSystemBtn" type="button" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Bắt đầu thực hiện hệ
+            </button>
+            <button id="resetSystemBtn" type="button" class="btn btn-secondary" title="Làm lại hệ">
+              Đặt lại
+            </button>
+          </div>
+        </section>
+
+        <!-- ==============================================================
+             CARD 2: HƯỚNG DẪN THỰC HÀNH TỪNG BƯỚC (BƯỚC 1 -> BƯỚC 2 -> BƯỚC 3)
+             ============================================================== -->
+        <section id="stepGuideCard" class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">
+              <span class="step-number-badge">2</span>
+              <span id="guideSectionHeading">Hướng dẫn thực hành từng bước</span>
+            </h2>
+          </div>
+
+          <!-- Progress Indicators -->
+          <div id="stepsProgressBar" class="steps-progress">
+            <div id="pillStep1" class="step-pill active">
+              <span class="step-pill-dot">1</span>
+              <span>Bước 1: Vẽ bờ d</span>
+            </div>
+            <div id="pillStep2" class="step-pill">
+              <span class="step-pill-dot">2</span>
+              <span>Bước 2: Điểm thử M</span>
+            </div>
+            <div id="pillStep3" class="step-pill" style="display: none;">
+              <span class="step-pill-dot">3</span>
+              <span>Bước 3: Đỉnh đa giác</span>
+            </div>
+          </div>
+
+          <!-- System Sequential Progress Tracker (Visible during System Execution) -->
+          <div id="systemProgressStrip" class="system-progress-strip">
+            <div class="sys-progress-title">
+              <span id="sysProgressHeading">Tiến trình thực hiện lần lượt các BPT trong hệ:</span>
+              <span id="sysProgressCounter">Đã xong 0 / 4 BPT</span>
+            </div>
+            <div id="sysProgressChips" class="sys-progress-chips"></div>
+          </div>
+
+          <!-- Idle prompt -->
+          <div id="idleGuidePrompt" class="guide-banner">
+            Hãy nhập các hệ số <strong>a, b, c</strong> và dấu bất phương trình ở trên, sau đó bấm <strong>"Bắt đầu vẽ"</strong> để bắt đầu xác định miền nghiệm theo chuẩn SGK Toán 10.
+          </div>
+
+          <!-- Active Step 1 & Step 2 Container (reused for Single & each Inequality in System) -->
+          <div id="step1Container" style="display: none;">
+            <div id="step1GuideBanner" class="guide-banner">
+              <div>
+                <strong id="step1HeadingLabel">Bước 1:</strong> Vẽ đường thẳng ranh giới <strong id="boundaryEqText">d: 2x + y = 4</strong>.
+              </div>
+              <div id="boundaryLineTypeDesc" style="margin-top: 4px;"></div>
+              <div style="margin-top: 6px; font-size: 0.79rem; color: #334155;">
+                💡 <em>Mẹo:</em> Nhập số nguyên, số thập phân hoặc phân số (VD: <code>3/2</code>, <code>-1/3</code>) hoặc <strong>click trực tiếp lên lưới Oxy</strong> (bắt điểm bước <code>0.5</code>).
+              </div>
+            </div>
+
+            <!-- Point 1 Selection Box -->
+            <div id="point1Box" class="point-box active-point">
+              <div class="point-box-header">
+                <div class="point-title">
+                  <span class="point-marker-badge marker-a">A</span>
+                  <span>Chọn Điểm 1 (x₁; y₁) thuộc đường thẳng bờ</span>
+                </div>
+                <span id="point1StatusTag" class="point-status-tag waiting">Đang chọn</span>
+              </div>
+              <div class="coord-inputs-grid">
+                <label class="coord-field">
+                  <span class="coord-label">x₁ =</span>
+                  <input id="p1XInput" class="coord-input" type="text" placeholder="VD: 0, 3/2" autocomplete="off" />
+                </label>
+                <label class="coord-field">
+                  <span class="coord-label">y₁ =</span>
+                  <input id="p1YInput" class="coord-input" type="text" placeholder="VD: 4, -1/3" autocomplete="off" />
+                </label>
+                <button id="checkP1Btn" type="button" class="btn btn-primary" style="padding: 7px 11px;">
+                  Kiểm tra
+                </button>
+              </div>
+              <div class="hint-text">
+                <span>Hoặc click trực tiếp lên mặt phẳng tọa độ Oxy bên phải.</span>
+              </div>
+              <div id="point1Feedback" class="feedback-box" role="alert"></div>
+            </div>
+
+            <!-- Point 2 Selection Box -->
+            <div id="point2Box" class="point-box locked-point">
+              <div class="point-box-header">
+                <div class="point-title">
+                  <span class="point-marker-badge marker-b">B</span>
+                  <span>Chọn Điểm 2 (x₂; y₂) thuộc bờ (khác Điểm 1)</span>
+                </div>
+                <span id="point2StatusTag" class="point-status-tag">Chờ Điểm 1</span>
+              </div>
+              <div class="coord-inputs-grid">
+                <label class="coord-field">
+                  <span class="coord-label">x₂ =</span>
+                  <input id="p2XInput" class="coord-input" type="text" placeholder="VD: 2, -1/2" autocomplete="off" disabled />
+                </label>
+                <label class="coord-field">
+                  <span class="coord-label">y₂ =</span>
+                  <input id="p2YInput" class="coord-input" type="text" placeholder="VD: 0, 5/3" autocomplete="off" disabled />
+                </label>
+                <button id="checkP2Btn" type="button" class="btn btn-primary" style="padding: 7px 11px;" disabled>
+                  Kiểm tra
+                </button>
+              </div>
+              <div class="hint-text">
+                <span>Cần thêm 1 điểm phân biệt với Điểm 1 để xác định duy nhất đường thẳng bờ.</span>
+              </div>
+              <div id="point2Feedback" class="feedback-box" role="alert"></div>
+            </div>
+
+            <!-- Compact Step 1 Completed Summary -->
+            <div id="step1CompactDone" class="step1-compact-done">
+              <span id="step1CompactText">✅ Đã vẽ đường thẳng bờ.</span>
+            </div>
+
+            <!-- ============================================================
+                 BƯỚC 2: CHỌN ĐIỂM THỬ M(x0; y0) & XÁC ĐỊNH MIỀN NGHIỆM
+                 ============================================================ -->
+            <div id="step2Section" class="step2-section">
+              <div class="guide-banner amber-banner">
+                <div>
+                  <strong id="step2HeadingLabel">Bước 2:</strong> Chọn điểm thử <strong>M(x₀; y₀) KHÔNG thuộc đường thẳng ranh giới</strong> để xác định miền nghiệm của <strong id="step2IneqText">2x + y ≤ 4</strong>.
+                </div>
+                <div id="step2OriginHint" style="margin-top: 6px; font-size: 0.8rem;"></div>
+              </div>
+
+              <div id="testPointBox" class="point-box active-test-point">
+                <div class="point-box-header">
+                  <div class="point-title">
+                    <span class="point-marker-badge marker-m">M</span>
+                    <span>Chọn điểm thử M(x₀; y₀) không thuộc bờ</span>
+                  </div>
+                  <span id="testPointStatusTag" class="point-status-tag waiting-amber">Đang chọn</span>
+                </div>
+
+                <div class="coord-inputs-grid">
+                  <label class="coord-field">
+                    <span class="coord-label">x₀ =</span>
+                    <input id="mXInput" class="coord-input" type="text" placeholder="VD: 0, 1" autocomplete="off" />
+                  </label>
+                  <label class="coord-field">
+                    <span class="coord-label">y₀ =</span>
+                    <input id="mYInput" class="coord-input" type="text" placeholder="VD: 0, 1" autocomplete="off" />
+                  </label>
+                  <button id="checkTestPointBtn" type="button" class="btn btn-primary" style="padding: 7px 11px;">
+                    Chọn điểm M
+                  </button>
+                </div>
+
+                <div class="hint-text">
+                  <span>Click lên đồ thị hoặc nhập tọa độ (hỗ trợ cả phân số).</span>
+                  <button id="quickOriginBtn" type="button" class="quick-origin-btn">Chọn nhanh O(0; 0)</button>
+                </div>
+
+                <div id="testPointFeedback" class="feedback-box" role="alert"></div>
+              </div>
+
+              <div id="substitutionCard" class="substitution-card">
+                <div class="sub-card-title">
+                  Thay tọa độ điểm thử <span id="subPointLabel">M(0; 0)</span> vào bất phương trình <span id="subIneqLabel">2x + y ≤ 4</span>:
+                </div>
+                <div id="subExpressionBox" class="sub-expression-display">
+                  2·(0) + 1·(0)   ...   4
+                </div>
+                <p class="sub-question-prompt">
+                  Em hãy tính giá trị vế trái rồi so sánh với vế phải theo dấu <strong id="subOpSymbol">≤</strong> để kết luận điểm <strong>M</strong> có thỏa mãn bất phương trình không:
+                </p>
+                <div class="confirm-btns-grid">
+                  <button id="btnConfirmSatisfy" type="button" class="btn btn-success-outline">
+                    ✓ Thỏa mãn bất phương trình
+                  </button>
+                  <button id="btnConfirmNotSatisfy" type="button" class="btn btn-danger-outline">
+                    ✕ Không thỏa mãn bất phương trình
+                  </button>
+                </div>
+                <div id="step2ConfirmFeedback" class="feedback-box" role="alert"></div>
+              </div>
+
+              <!-- Completion Card for Current Inequality -->
+              <div id="finalCompleteCard" class="final-complete-card">
+                <div class="complete-header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  <span id="finalCompleteTitle">Hoàn thành biểu diễn miền nghiệm của bất phương trình!</span>
+                </div>
+                <div id="finalCompleteSummary" class="complete-summary"></div>
+                <div id="nextSystemIneqRow" class="btn-row" style="display: none; margin-top: 10px;">
+                  <button id="nextSystemIneqBtn" type="button" class="btn btn-success">
+                    Tiếp tục sang BPT tiếp theo →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ============================================================
+               BƯỚC 3: MIỀN GIAO & TÌM TỌA ĐỘ CÁC ĐỈNH ĐA GIÁC (HỆ BPT)
+               ============================================================ -->
+          <div id="step3Section" class="step3-section">
+            <div id="step3ResultBanner" class="step3-result-banner"></div>
+
+            <!-- Interactive Vertex Table (Only for Bounded Closed Polygon) -->
+            <div id="step3VertexPanel" style="display: none;">
+              <div class="vertex-table-header">
+                <h3 class="vertex-table-title">Bước 3: Tìm tọa độ các đỉnh của đa giác miền nghiệm</h3>
+                <span id="vertexProgressBadge" class="vertex-progress-badge">0 / 0 đỉnh</span>
+              </div>
+              <div class="guide-banner emerald-banner" style="margin-bottom: 10px;">
+                Giải từng hệ phương trình bậc nhất hai ẩn của hai đường thẳng giao nhau rồi nhập tọa độ chính xác (số nguyên, thập phân hoặc phân số như <code>5/3</code>) cho từng đỉnh <strong>A, B, C, ...</strong> (sắp xếp ngược chiều kim đồng hồ).
+              </div>
+              <div id="vertexCardsList" class="vertex-list"></div>
+              <div id="vertexAllDoneCard" class="vertex-all-done-card"></div>
+            </div>
+
+            <div class="btn-row" style="margin-top: 12px;">
+              <button id="fitSolutionViewBtn" type="button" class="btn btn-secondary" style="display: none;">
+                Căn giữa đa giác
+              </button>
+              <button id="redoSystemBtn" type="button" class="btn btn-primary">
+                Thực hành hệ BPT khác
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </aside>
+
+    <!-- Right Column: Interactive Coordinate Plane -->
+    <section class="canvas-column" aria-label="Mặt phẳng tọa độ Oxy">
+      <div class="canvas-wrapper" id="canvasWrapper">
+        <canvas id="coordCanvas"></canvas>
+
+        <!-- Top-Left Interactive Status Banner -->
+        <div class="canvas-top-left">
+          <div class="canvas-status-pill">
+            <span id="canvasStatusDot" class="status-pulse"></span>
+            <span id="canvasStatusText">Sẵn sàng: Nhập bất phương trình và bấm "Bắt đầu vẽ"</span>
+          </div>
+        </div>
+
+        <!-- Top-Right Zoom & Reset View Controls -->
+        <div class="canvas-toolbar">
+          <button id="zoomInBtn" type="button" class="tool-btn tool-btn-icon" title="Phóng to (Cuộn chuột lên)">+</button>
+          <button id="zoomOutBtn" type="button" class="tool-btn tool-btn-icon" title="Thu nhỏ (Cuộn chuột xuống)">&minus;</button>
+          <span class="toolbar-divider"></span>
+          <button id="resetViewBtn" type="button" class="tool-btn" title="Đưa gốc tọa độ O(0;0) về chính giữa">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            Đặt lại góc nhìn
+          </button>
+        </div>
+
+        <!-- Bottom Legend & Live Coordinates -->
+        <div class="canvas-bottom-bar">
+          <div class="canvas-legend">
+            <div class="legend-item">
+              <span class="legend-dot"></span>
+              <span>Điểm bờ</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot-m"></span>
+              <span>Điểm thử M</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-line-solid"></span>
+              <span>Nét liền (&le;, &ge;)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-line-dashed"></span>
+              <span>Nét đứt (&lt;, &gt;)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-hatch-swatch"></span>
+              <span>Gạch bỏ miền sai</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-poly-swatch"></span>
+              <span>Miền giao hệ BPT</span>
+            </div>
+          </div>
+
+          <div id="cursorCoordDisplay" class="cursor-coord-box">
+            Con trỏ: (0; 0)
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /**
+     * HỌC LIỆU SỐ TOÁN 10: BẤT PHƯƠNG TRÌNH & HỆ BPT BẬC NHẤT HAI ẨN
+     * - Chế độ Bất phương trình đơn: Bước 1 (Vẽ bờ d) -> Bước 2 (Điểm thử M & gạch bỏ miền sai).
+     * - Chế độ Hệ bất phương trình (2–6 BPT):
+     *   + Thực hiện tuần tự từng BPT (d1, d2, ...) theo Bước 1 -> Bước 2 với màu & góc gạch khác nhau.
+     *   + Bước 3: Tính miền giao bằng Sutherland–Hodgman trên hộp [-10000, 10000], xử lý đủ 3 trường hợp
+     *     (Vô nghiệm / Không bị chặn / Đa giác kín) và cho học sinh tự tìm & kiểm tra tọa độ các đỉnh A, B, C...
+     */
+    (function () {
+      'use strict';
+
+      const EPSILON = 1e-6;
+      const VERTEX_TOLERANCE = 1e-3;
+      const BIG_BOUND = 10000;
+
+      // Bảng màu & góc gạch chéo phân biệt cho tối đa 6 bất phương trình trong hệ
+      const SYSTEM_PALETTE = [
+        { line: '#2563eb', hatch: '#e11d48', angle: 45  }, // d1: xanh dương, gạch đỏ 45°
+        { line: '#0d9488', hatch: '#d97706', angle: -45 }, // d2: xanh ngọc, gạch cam -45°
+        { line: '#7c3aed', hatch: '#7c3aed', angle: 30  }, // d3: tím, gạch tím 30°
+        { line: '#0284c7', hatch: '#0284c7', angle: -30 }, // d4: xanh trời, gạch xanh -30°
+        { line: '#db2777', hatch: '#65a30d', angle: 60  }, // d5: hồng đậm, gạch xanh lá 60°
+        { line: '#ea580c', hatch: '#475569', angle: -60 }  // d6: cam đậm, gạch xám -60°
+      ];
+
+      const QUICK_EXAMPLES = {
+        singleClassic: {
+          mode: 'single',
+          inequality: { a: '2', b: '-1', op: '<=', c: '4' }
+        },
+        sysTriangle: {
+          mode: 'system',
+          list: [
+            { a: 1, b: 0, op: '>=', c: 0 },
+            { a: 0, b: 1, op: '>=', c: 0 },
+            { a: 1, b: 1, op: '<=', c: 4 }
+          ]
+        },
+        sysQuad: {
+          mode: 'system',
+          list: [
+            { a: 1, b: 0, op: '>=', c: 0 },
+            { a: 0, b: 1, op: '>=', c: 0 },
+            { a: 1, b: 2, op: '<=', c: 6 },
+            { a: 2, b: 1, op: '<=', c: 6 }
+          ]
+        },
+        sysStrict: {
+          mode: 'system',
+          list: [
+            { a: 1, b: 0, op: '>', c: 0 },
+            { a: 0, b: 1, op: '>', c: 0 },
+            { a: 1, b: 1, op: '<', c: 4 }
+          ]
+        }
+      };
+
+      const SYSTEM_PRESETS = {
+        triangle: [
+          { a: 1, b: 0, op: '>=', c: 0 },
+          { a: 0, b: 1, op: '>=', c: 0 },
+          { a: 2, b: 1, op: '<=', c: 4 }
+        ],
+        quadFraction: [
+          { a: 1, b: 0, op: '>=', c: 0 },
+          { a: 0, b: 1, op: '>=', c: 0 },
+          { a: 2, b: 1, op: '<=', c: 5 },
+          { a: 1, b: 2, op: '<=', c: 5 }
+        ],
+        unbounded: [
+          { a: 1, b: 0, op: '>=', c: 0 },
+          { a: 0, b: 1, op: '>=', c: 0 },
+          { a: 1, b: 1, op: '>=', c: 2 }
+        ],
+        empty: [
+          { a: 1, b: 1, op: '<=', c: 1 },
+          { a: 1, b: 1, op: '>=', c: 4 }
+        ]
+      };
+
+      /* =========================================================================
+       * 1. TIỆN ÍCH TOÁN HỌC & HÌNH HỌC TÍNH TOÁN (MathUtils)
+       * ========================================================================= */
+      const MathUtils = {
+        parseNumber(rawStr, options = {}) {
+          if (typeof rawStr !== 'string') {
+            rawStr = String(rawStr ?? '');
+          }
+          const cleaned = rawStr
+            .replace(/[\u2212\u2013\u2014]/g, '-')
+            .trim()
+            .replace(/\s+/g, '')
+            .replace(/,/g, '.');
+
+          if (!cleaned) {
+            if (options.emptyAsZero) {
+              return { valid: true, value: 0, display: '0' };
+            }
+            return { valid: false, error: 'Em chưa nhập số vào ô này. Hãy điền một số nhé!' };
+          }
+
+          const numRegex = /^[+-]?(\d+(\.\d+)?|\.\d+)$/;
+
+          if (cleaned.includes('/')) {
+            const parts = cleaned.split('/');
+            if (parts.length !== 2 || !parts[0] || !parts[1] || !numRegex.test(parts[0]) || !numRegex.test(parts[1])) {
+              return { valid: false, error: `Phân số "${rawStr}" chưa đúng dạng. Em hãy nhập kiểu 5/3 hoặc -2/3 nhé!` };
+            }
+            const num = Number(parts[0]);
+            const den = Number(parts[1]);
+            if (!Number.isFinite(num) || !Number.isFinite(den)) {
+              return { valid: false, error: `Tử số hoặc mẫu số trong "${rawStr}" chưa phải là số. Em kiểm tra lại nhé!` };
+            }
+            if (Math.abs(den) < 1e-12) {
+              return { valid: false, error: 'Mẫu số không được bằng 0 (không thể chia cho 0). Em nhập lại nhé!' };
+            }
+            let val = num / den;
+            if (!Number.isFinite(val)) {
+              return { valid: false, error: `Số "${rawStr}" quá lớn, em hãy chọn số gọn hơn nhé!` };
+            }
+            if (Math.abs(val) < 1e-15) val = 0;
+            return {
+              valid: true,
+              value: val,
+              display: this.formatExactRational(val)
+            };
+          }
+
+          if (!numRegex.test(cleaned)) {
+            return { valid: false, error: `Giá trị "${rawStr}" chưa đúng dạng số. Em hãy nhập số nguyên, số thập phân (1,5) hoặc phân số (-2/3) nhé!` };
+          }
+          let val = Number(cleaned);
+          if (!Number.isFinite(val)) {
+            return { valid: false, error: `Số "${rawStr}" quá lớn, em hãy chọn số gọn hơn nhé!` };
+          }
+          if (Math.abs(val) < 1e-15) val = 0;
+          return {
+            valid: true,
+            value: val,
+            display: this.formatNumber(val)
+          };
+        },
+
+        formatNumber(val) {
+          if (Math.abs(val) < 1e-9) return '0';
+          const roundedInt = Math.round(val);
+          if (Math.abs(val - roundedInt) < 1e-8) {
+            return String(roundedInt);
+          }
+          const fixed4 = Number(val.toFixed(4));
+          if (Math.abs(val - fixed4) < 1e-7) {
+            return String(fixed4);
+          }
+          const frac = this.toSimpleFraction(val, 200);
+          if (frac) {
+            return `${frac.num}/${frac.den}`;
+          }
+          return Number(val.toFixed(3)).toString();
+        },
+
+        /**
+         * Định dạng tọa độ chính xác ưu tiên dạng phân số tối giản nếu là số hữu tỉ không nguyên (VD: 5/3, -5/2, 12/7)
+         */
+        formatExactRational(val) {
+          if (Math.abs(val) < 1e-9) return '0';
+          const roundedInt = Math.round(val);
+          if (Math.abs(val - roundedInt) < 1e-7) {
+            return String(roundedInt);
+          }
+          const frac = this.toSimpleFraction(val, 1000);
+          if (frac) {
+            return `${frac.num}/${frac.den}`;
+          }
+          return Number(val.toFixed(3)).toString();
+        },
+
+        toSimpleFraction(val, maxDen = 1000) {
+          const sign = val < 0 ? -1 : 1;
+          const absVal = Math.abs(val);
+          let bestNum = 0;
+          let bestDen = 1;
+          let bestErr = Infinity;
+
+          for (let den = 2; den <= maxDen; den++) {
+            const num = Math.round(absVal * den);
+            const err = Math.abs(absVal - num / den);
+            if (err < 1e-7 && err < bestErr) {
+              bestErr = err;
+              bestNum = num;
+              bestDen = den;
+              if (err < 1e-11) break;
+            }
+          }
+          if (bestErr < 1e-7) {
+            const g = this.gcd(bestNum, bestDen);
+            return { num: sign * (bestNum / g), den: bestDen / g };
+          }
+          return null;
+        },
+
+        gcd(a, b) {
+          a = Math.abs(a);
+          b = Math.abs(b);
+          while (b > 0) {
+            const t = b;
+            b = a % b;
+            a = t;
+          }
+          return a || 1;
+        },
+
+        opToSymbol(op) {
+          switch (op) {
+            case '<=': return '≤';
+            case '>=': return '≥';
+            case '<': return '<';
+            case '>': return '>';
+            default: return '=';
+          }
+        },
+
+        formatLHS(a, b) {
+          if (Math.abs(a) < 1e-9 && Math.abs(b) < 1e-9) return '0';
+          const parts = [];
+          if (Math.abs(a) >= 1e-9) {
+            if (Math.abs(a - 1) < 1e-9) parts.push('x');
+            else if (Math.abs(a + 1) < 1e-9) parts.push('-x');
+            else parts.push(`${this.formatNumber(a)}x`);
+          }
+          if (Math.abs(b) >= 1e-9) {
+            const absB = Math.abs(b);
+            const bCoeffStr = Math.abs(absB - 1) < 1e-9 ? '' : this.formatNumber(absB);
+            if (parts.length === 0) {
+              parts.push(b < 0 ? `-${bCoeffStr}y` : `${bCoeffStr}y`);
+            } else {
+              parts.push(b < 0 ? `- ${bCoeffStr}y` : `+ ${bCoeffStr}y`);
+            }
+          }
+          return parts.join(' ');
+        },
+
+        formatInequality(a, b, op, c) {
+          return `${this.formatLHS(a, b)} ${this.opToSymbol(op)} ${this.formatNumber(c)}`;
+        },
+
+        formatLineEquation(a, b, c) {
+          return `${this.formatLHS(a, b)} = ${this.formatNumber(c)}`;
+        },
+
+        formatSubstitution(a, b, x, y, xDisplay, yDisplay) {
+          const aStr = this.formatNumber(a);
+          const bStr = b < 0 ? `(${this.formatNumber(b)})` : this.formatNumber(b);
+          const xParen = `(${xDisplay})`;
+          const yParen = `(${yDisplay})`;
+          const lhsVal = a * x + b * y;
+          const lhsStr = this.formatNumber(lhsVal);
+          return {
+            lhsVal,
+            lhsStr,
+            rawProductExpr: `${aStr}·${xParen} + ${bStr}·${yParen}`,
+            expr: `${aStr}·${xParen} + ${bStr}·${yParen} = ${lhsStr}`
+          };
+        },
+
+        doesPointSatisfy(a, b, op, c, x, y) {
+          const lhs = a * x + b * y;
+          switch (op) {
+            case '<=': return lhs <= c + EPSILON;
+            case '<':  return lhs < c - EPSILON;
+            case '>=': return lhs >= c - EPSILON;
+            case '>':  return lhs > c + EPSILON;
+            default:   return false;
+          }
+        },
+
+        /**
+         * Thuật toán cắt đa giác Sutherland–Hodgman hoàn toàn bằng TỌA ĐỘ TOÁN HỌC.
+         * - keepWrongSide = true  -> giữ nửa mặt phẳng MIỀN SAI (phần cần gạch bỏ).
+         * - keepWrongSide = false -> giữ nửa mặt phẳng MIỀN NGHIỆM (dùng tìm miền giao của Hệ).
+         */
+        clipPolygonHalfPlane(poly, a, b, c, op, keepWrongSide = true) {
+          if (!Array.isArray(poly) || poly.length < 3) return [];
+
+          const isLessOp = (op === '<=' || op === '<');
+          const sign = keepWrongSide ? (isLessOp ? 1 : -1) : (isLessOp ? -1 : 1);
+          const norm = Math.hypot(a, b) || 1;
+          const evalSide = (pt) => (sign * (a * pt.x + b * pt.y - c)) / norm;
+
+          const output = [];
+          const n = poly.length;
+
+          for (let i = 0; i < n; i++) {
+            const S = poly[i];
+            const E = poly[(i + 1) % n];
+            const dS = evalSide(S);
+            const dE = evalSide(E);
+            const sInside = dS >= -1e-9;
+            const eInside = dE >= -1e-9;
+
+            if (sInside && eInside) {
+              output.push({ x: E.x, y: E.y });
+            } else if (sInside && !eInside) {
+              const denom = dS - dE;
+              if (Math.abs(denom) > 1e-12) {
+                const t = dS / denom;
+                output.push({
+                  x: S.x + t * (E.x - S.x),
+                  y: S.y + t * (E.y - S.y)
+                });
+              }
+            } else if (!sInside && eInside) {
+              const denom = dS - dE;
+              if (Math.abs(denom) > 1e-12) {
+                const t = dS / denom;
+                output.push({
+                  x: S.x + t * (E.x - S.x),
+                  y: S.y + t * (E.y - S.y)
+                });
+              }
+              output.push({ x: E.x, y: E.y });
+            }
+          }
+
+          return output;
+        },
+
+        /**
+         * Kiểm tra hai đường thẳng a1*x + b1*y = c1 và a2*x + b2*y = c2 có trùng nhau không
+         */
+        areLinesCoincident(l1, l2) {
+          const n1 = Math.hypot(l1.a, l1.b);
+          const n2 = Math.hypot(l2.a, l2.b);
+          if (n1 < 1e-12 || n2 < 1e-12) return false;
+
+          let a1 = l1.a / n1, b1 = l1.b / n1, c1 = l1.c / n1;
+          if (a1 < -1e-9 || (Math.abs(a1) <= 1e-9 && b1 < 0)) {
+            a1 = -a1; b1 = -b1; c1 = -c1;
+          }
+
+          let a2 = l2.a / n2, b2 = l2.b / n2, c2 = l2.c / n2;
+          if (a2 < -1e-9 || (Math.abs(a2) <= 1e-9 && b2 < 0)) {
+            a2 = -a2; b2 = -b2; c2 = -c2;
+          }
+
+          return Math.abs(a1 - a2) < 1e-6 && Math.abs(b1 - b2) < 1e-6 && Math.abs(c1 - c2) < 1e-6;
+        },
+
+        dedupeAdjacentVertices(poly, distTol = 1e-7) {
+          if (!poly || poly.length === 0) return [];
+          const deduped = [];
+          for (let i = 0; i < poly.length; i++) {
+            const p = poly[i];
+            const prev = deduped[deduped.length - 1];
+            if (!prev || Math.hypot(p.x - prev.x, p.y - prev.y) > distTol) {
+              deduped.push({ x: p.x, y: p.y });
+            }
+          }
+          if (deduped.length > 1) {
+            const first = deduped[0];
+            const last = deduped[deduped.length - 1];
+            if (Math.hypot(first.x - last.x, first.y - last.y) <= distTol) {
+              deduped.pop();
+            }
+          }
+          return deduped;
+        },
+
+        /**
+         * Làm sạch đa giác sau khi cắt: lặp cho đến khi hội tụ để khử toàn bộ đỉnh trùng và đỉnh thẳng hàng
+         */
+        cleanPolygon(poly, distTol = 1e-4, sinTol = 1e-4) {
+          if (!poly || poly.length === 0) return [];
+          let current = this.dedupeAdjacentVertices(poly, distTol);
+          if (current.length < 3) return current;
+
+          for (let pass = 0; pass < 5; pass++) {
+            const prevLen = current.length;
+            current = this.dedupeAdjacentVertices(current, distTol);
+            if (current.length < 3) break;
+
+            const cleaned = [];
+            const m = current.length;
+            for (let i = 0; i < m; i++) {
+              const prev = current[(i - 1 + m) % m];
+              const curr = current[i];
+              const next = current[(i + 1) % m];
+              const v1x = curr.x - prev.x;
+              const v1y = curr.y - prev.y;
+              const v2x = next.x - curr.x;
+              const v2y = next.y - curr.y;
+              const len1 = Math.hypot(v1x, v1y);
+              const len2 = Math.hypot(v2x, v2y);
+              if (len1 <= distTol || len2 <= distTol) continue;
+              const sinTheta = Math.abs(v1x * v2y - v1y * v2x) / (len1 * len2);
+              if (sinTheta > sinTol) {
+                cleaned.push(curr);
+              }
+            }
+            current = cleaned;
+            if (current.length === prevLen) break;
+          }
+          return current;
+        },
+
+        polygonSignedArea(poly) {
+          let sum = 0;
+          const n = poly.length;
+          for (let i = 0; i < n; i++) {
+            const p1 = poly[i];
+            const p2 = poly[(i + 1) % n];
+            sum += p1.x * p2.y - p2.x * p1.y;
+          }
+          return sum / 2;
+        },
+
+        solveLineIntersection(line1, line2) {
+          const det = line1.a * line2.b - line2.a * line1.b;
+          if (Math.abs(det) < 1e-10) return null;
+          let x = (line1.c * line2.b - line2.c * line1.b) / det;
+          let y = (line1.a * line2.c - line2.a * line1.c) / det;
+          if (Math.abs(x) < 1e-12) x = 0;
+          if (Math.abs(y) < 1e-12) y = 0;
+          return { x, y };
+        },
+
+        /**
+         * Tính miền nghiệm chung của hệ bất phương trình bằng Sutherland–Hodgman trên [-10000, 10000]
+         * Trả về:
+         *   - { type: 'empty', polygon: [], vertices: [], edgeStrict: [] }
+         *   - { type: 'unbounded', polygon, vertices: [], edgeStrict: [], degenerateLine?: boolean }
+         *   - { type: 'degenerate_point', polygon, vertices: [], edgeStrict: [] }
+         *   - { type: 'bounded', polygon, vertices: [...], edgeStrict: boolean[] }
+         */
+        computeSystemSolution(inequalities) {
+          let poly = [
+            { x: -BIG_BOUND, y: -BIG_BOUND },
+            { x:  BIG_BOUND, y: -BIG_BOUND },
+            { x:  BIG_BOUND, y:  BIG_BOUND },
+            { x: -BIG_BOUND, y:  BIG_BOUND }
+          ];
+
+          for (let i = 0; i < inequalities.length; i++) {
+            const ineq = inequalities[i];
+            poly = this.clipPolygonHalfPlane(poly, ineq.a, ineq.b, ineq.c, ineq.op, false);
+            poly = this.dedupeAdjacentVertices(poly, 1e-7);
+            if (poly.length === 0) {
+              return { type: 'empty', polygon: [], vertices: [], edgeStrict: [] };
+            }
+          }
+
+          poly = this.cleanPolygon(poly, 1e-4, 1e-4);
+          if (poly.length === 0) {
+            return { type: 'empty', polygon: [], vertices: [], edgeStrict: [] };
+          }
+
+          const centroid = poly.reduce(
+            (acc, p) => ({ x: acc.x + p.x / poly.length, y: acc.y + p.y / poly.length }),
+            { x: 0, y: 0 }
+          );
+          const centroidValid = inequalities.every((ineq) =>
+            this.doesPointSatisfy(ineq.a, ineq.b, ineq.op, ineq.c, centroid.x, centroid.y)
+          );
+
+          const touchesVirtualBoundary = poly.some(
+            (p) => Math.abs(p.x) >= BIG_BOUND - 1 || Math.abs(p.y) >= BIG_BOUND - 1
+          );
+
+          // Trường hợp suy biến diện tích = 0 (điểm, đoạn thẳng hoặc đường thẳng)
+          const signedArea = poly.length >= 3 ? this.polygonSignedArea(poly) : 0;
+          if (poly.length < 3 || Math.abs(signedArea) < 1e-5) {
+            if (!centroidValid) {
+              return { type: 'empty', polygon: [], vertices: [], edgeStrict: [] };
+            }
+            if (touchesVirtualBoundary) {
+              return { type: 'unbounded', polygon: [], vertices: [], edgeStrict: [], degenerateLine: true };
+            }
+            return { type: 'degenerate_point', polygon: poly, vertices: [], edgeStrict: [] };
+          }
+
+          if (!centroidValid) {
+            return { type: 'empty', polygon: [], vertices: [], edgeStrict: [] };
+          }
+
+          // Đảm bảo thứ tự đỉnh ngược chiều kim đồng hồ (CCW)
+          if (signedArea < 0) {
+            poly.reverse();
+          }
+
+          if (touchesVirtualBoundary) {
+            return { type: 'unbounded', polygon: poly, vertices: [], edgeStrict: [] };
+          }
+
+          // Trường hợp C: Đa giác kín!
+          // Xoay chỉ số bắt đầu sao cho Đỉnh A nằm ở góc dưới-trái nhất (ưu tiên y nhỏ rồi x nhỏ)
+          let startIdx = 0;
+          for (let i = 1; i < poly.length; i++) {
+            const p = poly[i];
+            const best = poly[startIdx];
+            if (p.y < best.y - 1e-6 || (Math.abs(p.y - best.y) <= 1e-6 && p.x < best.x)) {
+              startIdx = i;
+            }
+          }
+          const orderedPoly = [];
+          for (let i = 0; i < poly.length; i++) {
+            orderedPoly.push(poly[(startIdx + i) % poly.length]);
+          }
+
+          const findEdgeLineIndex = (p1, p2) => {
+            let bestIdx = -1;
+            let bestErr = Infinity;
+            for (let k = 0; k < inequalities.length; k++) {
+              const ineq = inequalities[k];
+              const norm = Math.hypot(ineq.a, ineq.b) || 1;
+              const d1 = Math.abs(ineq.a * p1.x + ineq.b * p1.y - ineq.c) / norm;
+              const d2 = Math.abs(ineq.a * p2.x + ineq.b * p2.y - ineq.c) / norm;
+              const err = Math.max(d1, d2);
+              if (err < bestErr) {
+                bestErr = err;
+                bestIdx = k;
+              }
+            }
+            return bestIdx;
+          };
+
+          let workingCorners = orderedPoly.map((pt, i) => ({
+            pt,
+            outLineIdx: findEdgeLineIndex(pt, orderedPoly[(i + 1) % orderedPoly.length])
+          }));
+
+          // Giải giao điểm chính xác và khử trùng đỉnh sau giải (tránh 2 đỉnh trùng tại giao điểm 3 đường đồng quy)
+          for (let iter = 0; iter < 5; iter++) {
+            const m = workingCorners.length;
+            if (m < 3) break;
+
+            const solvedCorners = workingCorners.map((item, i) => {
+              const inLineIdx = workingCorners[(i - 1 + m) % m].outLineIdx;
+              const outLineIdx = item.outLineIdx;
+              let exactPt = item.pt;
+              if (inLineIdx >= 0 && outLineIdx >= 0 && inLineIdx !== outLineIdx) {
+                const solved = this.solveLineIntersection(inequalities[inLineIdx], inequalities[outLineIdx]);
+                if (solved) exactPt = solved;
+              }
+              return { pt: exactPt, outLineIdx };
+            });
+
+            // Loại bỏ cạnh bị suy biến độ dài <= 1e-4 sau khi giải giao điểm
+            const filtered = [];
+            for (let i = 0; i < m; i++) {
+              const curr = solvedCorners[i];
+              const next = solvedCorners[(i + 1) % m];
+              if (Math.hypot(curr.pt.x - next.pt.x, curr.pt.y - next.pt.y) > 1e-4) {
+                filtered.push(curr);
+              }
+            }
+            workingCorners = filtered;
+            if (workingCorners.length === m) break;
+          }
+
+          if (workingCorners.length < 3) {
+            return { type: 'empty', polygon: [], vertices: [], edgeStrict: [] };
+          }
+
+          const finalCount = workingCorners.length;
+          const vertices = [];
+          for (let i = 0; i < finalCount; i++) {
+            const inLineIdx = workingCorners[(i - 1 + finalCount) % finalCount].outLineIdx;
+            const outLineIdx = workingCorners[i].outLineIdx;
+            let idx1 = inLineIdx;
+            let idx2 = outLineIdx;
+            if (idx1 > idx2) {
+              const tmp = idx1;
+              idx1 = idx2;
+              idx2 = tmp;
+            }
+            const exactPt = workingCorners[i].pt;
+            const name = i < 26 ? String.fromCharCode(65 + i) : `V${i + 1}`;
+            vertices.push({
+              name,
+              x: exactPt.x,
+              y: exactPt.y,
+              displayX: this.formatExactRational(exactPt.x),
+              displayY: this.formatExactRational(exactPt.y),
+              line1Idx: idx1,
+              line2Idx: idx2,
+              verified: false
+            });
+          }
+
+          // Xác định thuộc tính nét đứt (<, >) hay nét liền (<=, >=) cho từng cạnh đa giác
+          const edgeStrict = [];
+          for (let i = 0; i < finalCount; i++) {
+            const pA = vertices[i];
+            const pB = vertices[(i + 1) % finalCount];
+            let isStrict = false;
+            for (let k = 0; k < inequalities.length; k++) {
+              const ineq = inequalities[k];
+              const norm = Math.hypot(ineq.a, ineq.b) || 1;
+              const dA = Math.abs(ineq.a * pA.x + ineq.b * pA.y - ineq.c) / norm;
+              const dB = Math.abs(ineq.a * pB.x + ineq.b * pB.y - ineq.c) / norm;
+              if (dA < 1e-4 && dB < 1e-4 && (ineq.op === '<' || ineq.op === '>')) {
+                isStrict = true;
+                break;
+              }
+            }
+            edgeStrict.push(isStrict);
+          }
+
+          return {
+            type: 'bounded',
+            polygon: vertices.map((v) => ({ x: v.x, y: v.y })),
+            vertices,
+            edgeStrict
+          };
+        }
+      };
+
+      /* =========================================================================
+       * 2. QUẢN LÝ TRẠNG THÁI ỨNG DỤNG (AppState)
+       * ========================================================================= */
+      const AppState = {
+        mode: 'single', // 'single' | 'system'
+        // 'IDLE' | 'STEP1_POINT1' | 'STEP1_POINT2' | 'STEP2_PICK_POINT' | 'STEP2_CONFIRM' | 'STEP2_DONE' | 'STEP3_SYSTEM_RESULT'
+        step: 'IDLE',
+        inequality: { a: 2, b: 1, op: '<=', c: 4 },
+        points: {
+          p1: null,
+          p2: null,
+          testPoint: null
+        },
+        invalidMarker: null,
+        hoverSnapPoint: null,
+
+        // Dữ liệu chế độ Hệ bất phương trình (2..6 BPT)
+        systemDrafts: SYSTEM_PRESETS.quadFraction.map((item) => ({
+          a: String(item.a),
+          b: String(item.b),
+          op: item.op,
+          c: String(item.c)
+        })),
+        systemList: [],
+        activeSystemIndex: 0,
+        systemResult: null
+      };
+
+      /* =========================================================================
+       * 3. ĐỘNG CƠ VẼ MẶT PHẲNG TỌA ĐỘ OXY (CoordinatePlane)
+       * ========================================================================= */
+      class CoordinatePlane {
+        constructor(canvas, wrapper) {
+          this.canvas = canvas;
+          this.wrapper = wrapper;
+          this.ctx = canvas.getContext('2d');
+
+          this.defaultScale = 56;
+          this.scale = 56;
+          this.minScale = 2;
+          this.maxScale = 240;
+          this.offsetX = 0;
+          this.offsetY = 0;
+
+          this.width = 800;
+          this.height = 600;
+          this.dpr = window.devicePixelRatio || 1;
+
+          this.isDragging = false;
+          this.dragStartX = 0;
+          this.dragStartY = 0;
+          this.dragOriginOffsetX = 0;
+          this.dragOriginOffsetY = 0;
+          this.hasMovedDuringDrag = false;
+
+          this.initEvents();
+          this.resize(true);
+        }
+
+        resize(resetCenter = false) {
+          const rect = this.wrapper.getBoundingClientRect();
+          const prevW = this.width;
+          const prevH = this.height;
+
+          this.width = Math.max(300, rect.width);
+          this.height = Math.max(300, rect.height);
+          this.dpr = window.devicePixelRatio || 1;
+
+          this.canvas.width = Math.round(this.width * this.dpr);
+          this.canvas.height = Math.round(this.height * this.dpr);
+
+          if (resetCenter || (this.offsetX === 0 && this.offsetY === 0)) {
+            this.offsetX = this.width / 2;
+            this.offsetY = this.height / 2;
+          } else {
+            this.offsetX += (this.width - prevW) / 2;
+            this.offsetY += (this.height - prevH) / 2;
+          }
+
+          this.render();
+        }
+
+        resetView() {
+          this.scale = this.defaultScale;
+          this.offsetX = this.width / 2;
+          this.offsetY = this.height / 2;
+          this.render();
+        }
+
+        getNiceGridStep(minPxPerStep = 46) {
+          const rawStep = minPxPerStep / Math.max(this.scale, 0.1);
+          const pow10 = Math.pow(10, Math.floor(Math.log10(rawStep)));
+          const residual = rawStep / pow10;
+          if (residual <= 1) return pow10;
+          if (residual <= 2) return 2 * pow10;
+          if (residual <= 5) return 5 * pow10;
+          return 10 * pow10;
+        }
+
+        fitToPolygon(vertices) {
+          if (!vertices || vertices.length === 0) return;
+          let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+          vertices.forEach((v) => {
+            if (v.x < minX) minX = v.x;
+            if (v.x > maxX) maxX = v.x;
+            if (v.y < minY) minY = v.y;
+            if (v.y > maxY) maxY = v.y;
+          });
+          const spanX = Math.max(1.5, maxX - minX);
+          const spanY = Math.max(1.5, maxY - minY);
+          const usableW = Math.max(120, this.width - 170);
+          const usableH = Math.max(120, this.height - 175);
+          const targetScale = Math.min(this.maxScale, Math.max(this.minScale, Math.min(usableW / spanX, usableH / spanY)));
+
+          const cx = (minX + maxX) / 2;
+          const cy = (minY + maxY) / 2;
+          this.scale = targetScale;
+          this.offsetX = this.width / 2 - cx * this.scale;
+          this.offsetY = (this.height / 2 + 6) + cy * this.scale;
+          this.render();
+        }
+
+        autoFitIfOutOfView(vertices) {
+          if (!vertices || vertices.length === 0) return false;
+          let sMinX = Infinity, sMaxX = -Infinity, sMinY = Infinity, sMaxY = -Infinity;
+          vertices.forEach((v) => {
+            const p = this.worldToScreen(v.x, v.y);
+            if (p.x < sMinX) sMinX = p.x;
+            if (p.x > sMaxX) sMaxX = p.x;
+            if (p.y < sMinY) sMinY = p.y;
+            if (p.y > sMaxY) sMaxY = p.y;
+          });
+
+          const outOfSafeZone = (
+            sMinX < 75 || sMaxX > this.width - 75 ||
+            sMinY < 80 || sMaxY > this.height - 75
+          );
+          const spanPxW = sMaxX - sMinX;
+          const spanPxH = sMaxY - sMinY;
+          const tooSmall = spanPxW < 60 && spanPxH < 60;
+          const tooLarge = spanPxW > this.width * 0.85 || spanPxH > this.height * 0.85;
+
+          if (outOfSafeZone || tooSmall || tooLarge) {
+            this.fitToPolygon(vertices);
+            return true;
+          }
+          return false;
+        }
+
+        worldToScreen(wx, wy) {
+          return {
+            x: this.offsetX + wx * this.scale,
+            y: this.offsetY - wy * this.scale
+          };
+        }
+
+        mathToCanvas(wx, wy) {
+          return this.worldToScreen(wx, wy);
+        }
+
+        screenToWorld(sx, sy) {
+          return {
+            x: (sx - this.offsetX) / this.scale,
+            y: (this.offsetY - sy) / this.scale
+          };
+        }
+
+        snapToHalfGrid(wx, wy) {
+          return {
+            x: Math.round(wx * 2) / 2,
+            y: Math.round(wy * 2) / 2
+          };
+        }
+
+        zoomAt(factor, centerX, centerY) {
+          const worldBefore = this.screenToWorld(centerX, centerY);
+          const nextScale = Math.min(this.maxScale, Math.max(this.minScale, this.scale * factor));
+          this.scale = nextScale;
+          this.offsetX = centerX - worldBefore.x * this.scale;
+          this.offsetY = centerY + worldBefore.y * this.scale;
+          this.render();
+        }
+
+        isPickingStep() {
+          return (
+            AppState.step === 'STEP1_POINT1' ||
+            AppState.step === 'STEP1_POINT2' ||
+            AppState.step === 'STEP2_PICK_POINT' ||
+            AppState.step === 'STEP2_CONFIRM'
+          );
+        }
+
+        initEvents() {
+          const ro = new ResizeObserver(() => this.resize(false));
+          ro.observe(this.wrapper);
+
+          this.canvas.addEventListener('mousedown', (e) => {
+            if (e.button !== 0 && e.button !== 1) return;
+            const rect = this.canvas.getBoundingClientRect();
+            this.isDragging = true;
+            this.hasMovedDuringDrag = false;
+            this.dragStartX = e.clientX - rect.left;
+            this.dragStartY = e.clientY - rect.top;
+            this.dragOriginOffsetX = this.offsetX;
+            this.dragOriginOffsetY = this.offsetY;
+          });
+
+          window.addEventListener('mousemove', (e) => {
+            const rect = this.canvas.getBoundingClientRect();
+            const sx = e.clientX - rect.left;
+            const sy = e.clientY - rect.top;
+            const inside = sx >= 0 && sx <= this.width && sy >= 0 && sy <= this.height;
+
+            if (this.isDragging) {
+              const dx = sx - this.dragStartX;
+              const dy = sy - this.dragStartY;
+              if (Math.hypot(dx, dy) > 4) {
+                this.hasMovedDuringDrag = true;
+                this.canvas.classList.add('dragging');
+              }
+              if (this.hasMovedDuringDrag) {
+                this.offsetX = this.dragOriginOffsetX + dx;
+                this.offsetY = this.dragOriginOffsetY + dy;
+                this.render();
+              }
+              return;
+            }
+
+            if (inside) {
+              const world = this.screenToWorld(sx, sy);
+              const snapped = this.snapToHalfGrid(world.x, world.y);
+              AppState.hoverSnapPoint = snapped;
+
+              const coordEl = document.getElementById('cursorCoordDisplay');
+              if (this.isPickingStep()) {
+                coordEl.textContent = `Bắt điểm: (${MathUtils.formatNumber(snapped.x)}; ${MathUtils.formatNumber(snapped.y)})`;
+              } else {
+                coordEl.textContent = `Con trỏ: (${world.x.toFixed(1)}; ${world.y.toFixed(1)})`;
+              }
+              this.render();
+            } else if (AppState.hoverSnapPoint) {
+              AppState.hoverSnapPoint = null;
+              this.render();
+            }
+          });
+
+          window.addEventListener('mouseup', (e) => {
+            if (!this.isDragging) return;
+            const wasMoved = this.hasMovedDuringDrag;
+            this.isDragging = false;
+            this.hasMovedDuringDrag = false;
+            this.canvas.classList.remove('dragging');
+
+            if (!wasMoved) {
+              const rect = this.canvas.getBoundingClientRect();
+              const sx = e.clientX - rect.left;
+              const sy = e.clientY - rect.top;
+              if (sx >= 0 && sx <= this.width && sy >= 0 && sy <= this.height) {
+                this.handleCanvasClick(sx, sy);
+              }
+            }
+          });
+
+          this.canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const rect = this.canvas.getBoundingClientRect();
+            const sx = e.clientX - rect.left;
+            const sy = e.clientY - rect.top;
+            const factor = e.deltaY < 0 ? 1.14 : 1 / 1.14;
+            this.zoomAt(factor, sx, sy);
+          }, { passive: false });
+        }
+
+        handleCanvasClick(sx, sy) {
+          if (!this.isPickingStep()) return;
+          const world = this.screenToWorld(sx, sy);
+          const snapped = this.snapToHalfGrid(world.x, world.y);
+          UIController.onGridPointClicked(snapped.x, snapped.y);
+        }
+
+        getViewportMathPolygon() {
+          const pTopLeft = this.screenToWorld(0, 0);
+          const pBottomRight = this.screenToWorld(this.width, this.height);
+          const pad = Math.max(2, 40 / Math.max(this.scale, 1));
+          const xMin = Math.min(pTopLeft.x, pBottomRight.x) - pad;
+          const xMax = Math.max(pTopLeft.x, pBottomRight.x) + pad;
+          const yMin = Math.min(pTopLeft.y, pBottomRight.y) - pad;
+          const yMax = Math.max(pTopLeft.y, pBottomRight.y) + pad;
+          return [
+            { x: xMin, y: yMin },
+            { x: xMax, y: yMin },
+            { x: xMax, y: yMax },
+            { x: xMin, y: yMax }
+          ];
+        }
+
+        /**
+         * Vẽ toàn bộ mặt phẳng tọa độ Oxy, các miền gạch chéo, miền giao Bước 3, đường bờ và điểm
+         */
+        render() {
+          const ctx = this.ctx;
+          ctx.save();
+          ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, this.width, this.height);
+
+          this.drawGridAndAxes(ctx);
+
+          if (AppState.mode === 'single') {
+            this.renderSingleModeLayers(ctx);
+          } else {
+            this.renderSystemModeLayers(ctx);
+          }
+
+          if (this.isPickingStep() && AppState.hoverSnapPoint) {
+            this.drawHoverSnapCursor(ctx, AppState.hoverSnapPoint.x, AppState.hoverSnapPoint.y);
+          }
+
+          ctx.restore();
+        }
+
+        renderSingleModeLayers(ctx) {
+          const { a, b, op, c } = AppState.inequality;
+
+          if (AppState.step === 'STEP2_DONE') {
+            this.drawEliminatedHalfPlane(ctx, a, b, op, c, {
+              hatchColor: '#e11d48',
+              angleDeg: 45,
+              fillAlpha: 0.065,
+              strokeAlpha: 0.42
+            });
+            this.drawSolutionRegionLabel(ctx, a, b, op, c);
+          }
+
+          const hasLine = (
+            AppState.step === 'STEP2_PICK_POINT' ||
+            AppState.step === 'STEP2_CONFIRM' ||
+            AppState.step === 'STEP2_DONE'
+          );
+          if (hasLine) {
+            this.drawBoundaryLine(ctx, a, b, op, c, {
+              color: '#2563eb',
+              alpha: 1,
+              labelPrefix: 'd'
+            });
+          }
+
+          this.renderActiveConstructionPoints(ctx);
+        }
+
+        renderSystemModeLayers(ctx) {
+          const list = AppState.systemList;
+
+          // 1. Vẽ miền gạch chéo của tất cả các BPT đã hoàn thành Bước 2 (với góc & màu phân biệt)
+          list.forEach((item, idx) => {
+            const palette = SYSTEM_PALETTE[idx % SYSTEM_PALETTE.length];
+            const isActiveCompleted = (idx === AppState.activeSystemIndex && AppState.step === 'STEP2_DONE');
+            if (item.doneStep2 || isActiveCompleted) {
+              this.drawEliminatedHalfPlane(ctx, item.a, item.b, item.op, item.c, {
+                hatchColor: palette.hatch,
+                angleDeg: palette.angle,
+                fillAlpha: 0.045,
+                strokeAlpha: 0.34,
+                spacing: 16
+              });
+            }
+          });
+
+          // 2. BƯỚC 3: Tô màu nổi bật miền giao (Đa giác kín hoặc Miền không bị chặn)
+          if (AppState.step === 'STEP3_SYSTEM_RESULT' && AppState.systemResult) {
+            this.drawSystemIntersectionHighlight(ctx, AppState.systemResult, list);
+          }
+
+          // 3. Vẽ tất cả đường thẳng ranh giới d1, d2, ... đã hoàn thành Bước 1
+          const visibleLineFlags = list.map((item, idx) => {
+            const isActiveWithLine = (
+              idx === AppState.activeSystemIndex &&
+              (AppState.step === 'STEP2_PICK_POINT' || AppState.step === 'STEP2_CONFIRM' || AppState.step === 'STEP2_DONE')
+            );
+            return Boolean(item.doneStep1 || isActiveWithLine);
+          });
+
+          list.forEach((item, idx) => {
+            if (!visibleLineFlags[idx]) return;
+            const palette = SYSTEM_PALETTE[idx % SYSTEM_PALETTE.length];
+
+            const coincidentGroup = [];
+            let coincidentRank = 0;
+            for (let j = 0; j < list.length; j++) {
+              if (!visibleLineFlags[j]) continue;
+              if (j === idx || MathUtils.areLinesCoincident(item, list[j])) {
+                coincidentGroup.push(j);
+                if (j < idx) coincidentRank++;
+              }
+            }
+
+            let representativeIdx = coincidentGroup[coincidentGroup.length - 1];
+            const strictInGroup = coincidentGroup.filter((j) => list[j].op === '<' || list[j].op === '>');
+            if (strictInGroup.length > 0) {
+              representativeIdx = strictInGroup[strictInGroup.length - 1];
+            }
+
+            const baseT = 0.24 + ((idx % 4) * 0.16);
+            const shiftedT = Math.min(0.84, Math.max(0.14, baseT + coincidentRank * 0.14));
+
+            this.drawBoundaryLine(ctx, item.a, item.b, item.op, item.c, {
+              color: palette.line,
+              alpha: (AppState.step === 'STEP3_SYSTEM_RESULT' || idx === AppState.activeSystemIndex) ? 1 : 0.78,
+              labelPrefix: `d${idx + 1}`,
+              labelT: shiftedT,
+              skipLineStroke: idx !== representativeIdx
+            });
+          });
+
+          // 4. Ở Bước 3 (đa giác kín), vẽ chấm tròn & tên các đỉnh A, B, C... (kèm tọa độ khi đã tìm đúng)
+          if (AppState.step === 'STEP3_SYSTEM_RESULT' && AppState.systemResult && AppState.systemResult.type === 'bounded') {
+            this.drawPolygonVertices(ctx, AppState.systemResult.vertices);
+          } else if (AppState.step !== 'STEP3_SYSTEM_RESULT') {
+            this.renderActiveConstructionPoints(ctx);
+          }
+        }
+
+        renderActiveConstructionPoints(ctx) {
+          if (AppState.invalidMarker) {
+            this.drawPointMarker(ctx, AppState.invalidMarker.x, AppState.invalidMarker.y, {
+              color: '#dc2626',
+              fill: '#fee2e2',
+              label: AppState.invalidMarker.label,
+              isInvalid: true
+            });
+          }
+          if (AppState.points.p1) {
+            const p1 = AppState.points.p1;
+            this.drawPointMarker(ctx, p1.x, p1.y, {
+              color: '#2563eb',
+              fill: '#2563eb',
+              label: `A(${p1.displayX}; ${p1.displayY})`
+            });
+          }
+          if (AppState.points.p2) {
+            const p2 = AppState.points.p2;
+            this.drawPointMarker(ctx, p2.x, p2.y, {
+              color: '#7c3aed',
+              fill: '#7c3aed',
+              label: `B(${p2.displayX}; ${p2.displayY})`
+            });
+          }
+          if (AppState.points.testPoint) {
+            const m = AppState.points.testPoint;
+            this.drawPointMarker(ctx, m.x, m.y, {
+              color: '#d97706',
+              fill: '#f59e0b',
+              label: `M(${m.displayX}; ${m.displayY})`,
+              isTestPoint: true
+            });
+          }
+        }
+
+        /**
+         * Tô gạch chéo nửa mặt phẳng MIỀN SAI (thuật toán Sutherland–Hodgman theo tọa độ toán học + Canvas clip)
+         * Hỗ trợ góc gạch chéo tùy chỉnh (45°, -45°, 30°, -30°, 60°, -60°)
+         */
+        drawEliminatedHalfPlane(ctx, a, b, op, c, opts = {}) {
+          const viewportMathPoly = this.getViewportMathPolygon();
+          const wrongSidePoly = MathUtils.clipPolygonHalfPlane(viewportMathPoly, a, b, c, op, true);
+          if (wrongSidePoly.length < 3) return;
+
+          ctx.save();
+          ctx.beginPath();
+          const firstPx = this.mathToCanvas(wrongSidePoly[0].x, wrongSidePoly[0].y);
+          ctx.moveTo(firstPx.x, firstPx.y);
+          for (let i = 1; i < wrongSidePoly.length; i++) {
+            const px = this.mathToCanvas(wrongSidePoly[i].x, wrongSidePoly[i].y);
+            ctx.lineTo(px.x, px.y);
+          }
+          ctx.closePath();
+          ctx.clip();
+
+          // Lớp nền màu rất nhạt
+          const hatchColor = opts.hatchColor || '#e11d48';
+          ctx.fillStyle = hatchColor;
+          ctx.globalAlpha = opts.fillAlpha ?? 0.065;
+          ctx.fillRect(0, 0, this.width, this.height);
+
+          // Vẽ hệ đường sọc chéo song song theo góc angleDeg trực tiếp trong hệ tọa độ pixel (không xoay ma trận)
+          const angleDeg = opts.angleDeg ?? 45;
+          const theta = (-angleDeg * Math.PI) / 180;
+          const ux = Math.cos(theta);
+          const uy = Math.sin(theta);
+          const nx = -uy;
+          const ny = ux;
+
+          const spacing = opts.spacing ?? 14;
+          const cx = this.width / 2;
+          const cy = this.height / 2;
+          const halfDiag = Math.hypot(this.width, this.height) / 2 + spacing * 2;
+
+          ctx.beginPath();
+          ctx.strokeStyle = hatchColor;
+          ctx.globalAlpha = opts.strokeAlpha ?? 0.42;
+          ctx.lineWidth = 1.35;
+
+          for (let d = -halfDiag; d <= halfDiag; d += spacing) {
+            const px0 = cx + d * nx;
+            const py0 = cy + d * ny;
+            ctx.moveTo(px0 - halfDiag * ux, py0 - halfDiag * uy);
+            ctx.lineTo(px0 + halfDiag * ux, py0 + halfDiag * uy);
+          }
+          ctx.stroke();
+
+          ctx.restore();
+        }
+
+        strokeAlignedDashedSegment(ctx, p1, p2) {
+          let s1 = p1;
+          let s2 = p2;
+          let dx = s2.x - s1.x;
+          let dy = s2.y - s1.y;
+          const len = Math.hypot(dx, dy);
+          if (len < 1e-6) return;
+
+          if (dx < -1e-6 || (Math.abs(dx) <= 1e-6 && dy < 0)) {
+            s1 = p2;
+            s2 = p1;
+            dx = -dx;
+            dy = -dy;
+          }
+
+          const ux = dx / len;
+          const uy = dy / len;
+          const tStart = s1.x * ux + s1.y * uy;
+          const period = 17; // 10 + 7
+
+          ctx.setLineDash([10, 7]);
+          ctx.lineDashOffset = ((tStart % period) + period) % period;
+          ctx.beginPath();
+          ctx.moveTo(s1.x, s1.y);
+          ctx.lineTo(s2.x, s2.y);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.lineDashOffset = 0;
+        }
+
+        /**
+         * Tô màu nổi bật miền giao chung của Hệ bất phương trình (Đa giác kín hoặc Miền không bị chặn trong khung nhìn)
+         */
+        drawSystemIntersectionHighlight(ctx, result, inequalities) {
+          if (result.type === 'empty' || result.type === 'degenerate_point') return;
+          if (result.degenerateLine) return;
+
+          let drawPoly = [];
+          if (result.type === 'bounded') {
+            drawPoly = result.polygon;
+          } else if (result.type === 'unbounded') {
+            drawPoly = this.getViewportMathPolygon();
+            for (let i = 0; i < inequalities.length; i++) {
+              const ineq = inequalities[i];
+              drawPoly = MathUtils.clipPolygonHalfPlane(drawPoly, ineq.a, ineq.b, ineq.c, ineq.op, false);
+              if (drawPoly.length < 3) return;
+            }
+          }
+
+          if (drawPoly.length < 3) return;
+
+          ctx.save();
+          ctx.beginPath();
+          const p0 = this.mathToCanvas(drawPoly[0].x, drawPoly[0].y);
+          ctx.moveTo(p0.x, p0.y);
+          for (let i = 1; i < drawPoly.length; i++) {
+            const p = this.mathToCanvas(drawPoly[i].x, drawPoly[i].y);
+            ctx.lineTo(p.x, p.y);
+          }
+          ctx.closePath();
+
+          ctx.fillStyle = 'rgba(16, 185, 129, 0.20)';
+          ctx.fill();
+          ctx.restore();
+
+          if (result.type === 'bounded') {
+            for (let i = 0; i < drawPoly.length; i++) {
+              const aPx = this.mathToCanvas(drawPoly[i].x, drawPoly[i].y);
+              const bPx = this.mathToCanvas(drawPoly[(i + 1) % drawPoly.length].x, drawPoly[(i + 1) % drawPoly.length].y);
+              const isStrictEdge = Boolean(result.edgeStrict && result.edgeStrict[i]);
+
+              ctx.save();
+              ctx.lineWidth = 2.2;
+              ctx.strokeStyle = '#059669';
+              if (isStrictEdge) {
+                this.strokeAlignedDashedSegment(ctx, aPx, bPx);
+              } else {
+                ctx.setLineDash([]);
+                ctx.beginPath();
+                ctx.moveTo(aPx.x, aPx.y);
+                ctx.lineTo(bPx.x, bPx.y);
+                ctx.stroke();
+              }
+              ctx.restore();
+            }
+          }
+
+          const sum = drawPoly.reduce((acc, pt) => ({ x: acc.x + pt.x, y: acc.y + pt.y }), { x: 0, y: 0 });
+          const centerMath = { x: sum.x / drawPoly.length, y: sum.y / drawPoly.length };
+          const centerPx = this.mathToCanvas(centerMath.x, centerMath.y);
+          if (centerPx.x > 60 && centerPx.x < this.width - 60 && centerPx.y > 60 && centerPx.y < this.height - 60) {
+            this.drawCompactBadge(
+              ctx,
+              centerPx.x,
+              centerPx.y,
+              result.type === 'bounded' ? 'MIỀN NGHIỆM CỦA HỆ' : 'MIỀN NGHIỆM (Không bị chặn)',
+              '#065f46',
+              '#059669'
+            );
+          }
+        }
+
+        /**
+         * Vẽ các đỉnh đa giác A, B, C... (CCW): hiển thị tọa độ dạng phân số tối giản sau khi học sinh kiểm tra đúng
+         */
+        drawPolygonVertices(ctx, vertices) {
+          if (!vertices || vertices.length === 0) return;
+
+          const cx = vertices.reduce((s, v) => s + v.x, 0) / vertices.length;
+          const cy = vertices.reduce((s, v) => s + v.y, 0) / vertices.length;
+          const centerPx = this.mathToCanvas(cx, cy);
+
+          vertices.forEach((v) => {
+            const px = this.mathToCanvas(v.x, v.y);
+            const dx = px.x - centerPx.x;
+            const dy = px.y - centerPx.y;
+            const len = Math.hypot(dx, dy) || 1;
+            const dirX = dx / len;
+            const dirY = dy / len;
+
+            const isVerified = Boolean(v.verified);
+            const dotColor = isVerified ? '#059669' : '#4f46e5';
+            const haloColor = isVerified ? 'rgba(5, 150, 105, 0.24)' : 'rgba(79, 70, 229, 0.24)';
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(px.x, px.y, 11, 0, Math.PI * 2);
+            ctx.fillStyle = haloColor;
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(px.x, px.y, 6, 0, Math.PI * 2);
+            ctx.fillStyle = dotColor;
+            ctx.fill();
+            ctx.lineWidth = 2.2;
+            ctx.strokeStyle = '#ffffff';
+            ctx.stroke();
+
+            const label = isVerified ? `${v.name}(${v.displayX}; ${v.displayY})` : `${v.name}(?; ?)`;
+            ctx.font = 'bold 13px "Segoe UI", sans-serif';
+            const tw = ctx.measureText(label).width;
+            const boxW = Math.round(tw + 14);
+            const boxH = 24;
+
+            const labelCenterX = px.x + dirX * (boxW / 2 + 14);
+            const labelCenterY = px.y + dirY * (boxH / 2 + 12);
+            const bx = Math.round(Math.min(Math.max(labelCenterX - boxW / 2, 8), this.width - boxW - 8));
+            const by = Math.round(Math.min(Math.max(labelCenterY - boxH / 2, 54), this.height - boxH - 48));
+
+            this.roundRect(ctx, bx, by, boxW, boxH, 6);
+            ctx.fillStyle = isVerified ? '#ecfdf5' : '#eef2ff';
+            ctx.fill();
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = dotColor;
+            ctx.stroke();
+
+            ctx.fillStyle = isVerified ? '#065f46' : '#312e81';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(label, bx + boxW / 2, by + boxH / 2);
+            ctx.restore();
+          });
+        }
+
+        drawCompactBadge(ctx, cx, cy, text, textColor, borderColor) {
+          ctx.save();
+          ctx.font = 'bold 12px "Segoe UI", sans-serif';
+          const tw = ctx.measureText(text).width;
+          const boxW = Math.round(tw + 18);
+          const boxH = 26;
+          const bx = Math.round(cx - boxW / 2);
+          const by = Math.round(cy - boxH / 2);
+
+          this.roundRect(ctx, bx, by, boxW, boxH, 6);
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.94)';
+          ctx.fill();
+          ctx.lineWidth = 1.4;
+          ctx.strokeStyle = borderColor;
+          ctx.stroke();
+
+          ctx.fillStyle = textColor;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, cx, cy);
+          ctx.restore();
+        }
+
+        drawSolutionRegionLabel(ctx, a, b, op, c) {
+          const norm = Math.hypot(a, b);
+          if (norm < 1e-9) return;
+
+          const dirSign = (op === '<=' || op === '<') ? -1 : 1;
+          const nx = (dirSign * a) / norm;
+          const ny = (dirSign * b) / norm;
+
+          const centerW = this.screenToWorld(this.width / 2, this.height / 2);
+          const distFromLine = (a * centerW.x + b * centerW.y - c) / (norm * norm);
+          const projX = centerW.x - a * distFromLine;
+          const projY = centerW.y - b * distFromLine;
+
+          const offsetWorld = 115 / this.scale;
+          const screenPt = this.mathToCanvas(projX + nx * offsetWorld, projY + ny * offsetWorld);
+          const sx = Math.min(Math.max(screenPt.x, 125), this.width - 125);
+          const sy = Math.min(Math.max(screenPt.y, 75), this.height - 75);
+
+          const checkWorld = this.screenToWorld(sx, sy);
+          if (!MathUtils.doesPointSatisfy(a, b, op, c, checkWorld.x, checkWorld.y)) {
+            return;
+          }
+
+          this.drawCompactBadge(ctx, sx, sy, '✓ MIỀN NGHIỆM (Phần để trắng)', '#065f46', '#059669');
+        }
+
+        drawGridAndAxes(ctx) {
+          ctx.setLineDash([]);
+          const topLeft = this.screenToWorld(0, 0);
+          const bottomRight = this.screenToWorld(this.width, this.height);
+
+          const majorStep = this.getNiceGridStep(46);
+          const minorStep = majorStep / 2;
+
+          if (minorStep * this.scale >= 16) {
+            const mStartX = Math.floor(topLeft.x / minorStep) * minorStep;
+            const mEndX = Math.ceil(bottomRight.x / minorStep) * minorStep;
+            const mStartY = Math.floor(bottomRight.y / minorStep) * minorStep;
+            const mEndY = Math.ceil(topLeft.y / minorStep) * minorStep;
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#f1f5f9';
+            ctx.lineWidth = 1;
+            for (let x = mStartX; x <= mEndX + minorStep * 0.1; x += minorStep) {
+              const modMajor = Math.abs((x / majorStep) - Math.round(x / majorStep));
+              if (modMajor < 1e-4) continue;
+              const sx = Math.round(this.worldToScreen(x, 0).x) + 0.5;
+              ctx.moveTo(sx, 0);
+              ctx.lineTo(sx, this.height);
+            }
+            for (let y = mStartY; y <= mEndY + minorStep * 0.1; y += minorStep) {
+              const modMajor = Math.abs((y / majorStep) - Math.round(y / majorStep));
+              if (modMajor < 1e-4) continue;
+              const sy = Math.round(this.worldToScreen(0, y).y) + 0.5;
+              ctx.moveTo(0, sy);
+              ctx.lineTo(this.width, sy);
+            }
+            ctx.stroke();
+          }
+
+          const startX = Math.floor(topLeft.x / majorStep) * majorStep;
+          const endX = Math.ceil(bottomRight.x / majorStep) * majorStep;
+          const startY = Math.floor(bottomRight.y / majorStep) * majorStep;
+          const endY = Math.ceil(topLeft.y / majorStep) * majorStep;
+
+          ctx.beginPath();
+          ctx.strokeStyle = '#e2e8f0';
+          ctx.lineWidth = 1;
+          for (let x = startX; x <= endX + majorStep * 0.1; x += majorStep) {
+            if (Math.abs(x) < majorStep * 1e-4) continue;
+            const sx = Math.round(this.worldToScreen(x, 0).x) + 0.5;
+            ctx.moveTo(sx, 0);
+            ctx.lineTo(sx, this.height);
+          }
+          for (let y = startY; y <= endY + majorStep * 0.1; y += majorStep) {
+            if (Math.abs(y) < majorStep * 1e-4) continue;
+            const sy = Math.round(this.worldToScreen(0, y).y) + 0.5;
+            ctx.moveTo(0, sy);
+            ctx.lineTo(this.width, sy);
+          }
+          ctx.stroke();
+
+          const origin = this.worldToScreen(0, 0);
+          ctx.strokeStyle = '#334155';
+          ctx.fillStyle = '#334155';
+          ctx.lineWidth = 1.8;
+
+          ctx.beginPath();
+          ctx.moveTo(0, origin.y);
+          ctx.lineTo(this.width, origin.y);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(this.width - 2, origin.y);
+          ctx.lineTo(this.width - 12, origin.y - 5);
+          ctx.lineTo(this.width - 12, origin.y + 5);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.moveTo(origin.x, this.height);
+          ctx.lineTo(origin.x, 0);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(origin.x, 2);
+          ctx.lineTo(origin.x - 5, 12);
+          ctx.lineTo(origin.x + 5, 12);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.font = 'italic bold 15px "Cambria Math", "Times New Roman", serif';
+          ctx.fillStyle = '#0f172a';
+          ctx.fillText('x', this.width - 18, origin.y - 10);
+          ctx.fillText('y', origin.x + 12, 18);
+          ctx.font = 'bold 13px "Segoe UI", sans-serif';
+          ctx.fillText('O', origin.x - 16, origin.y + 16);
+
+          ctx.font = '600 11.5px "Segoe UI", sans-serif';
+          ctx.fillStyle = '#475569';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'top';
+
+          for (let x = startX; x <= endX + majorStep * 0.1; x += majorStep) {
+            if (Math.abs(x) < majorStep * 1e-4) continue;
+            const sx = this.worldToScreen(x, 0).x;
+            if (sx < 18 || sx > this.width - 24) continue;
+
+            ctx.beginPath();
+            ctx.moveTo(sx, origin.y - 4);
+            ctx.lineTo(sx, origin.y + 4);
+            ctx.stroke();
+
+            const labelY = Math.min(Math.max(origin.y + 7, 6), this.height - 20);
+            ctx.fillText(MathUtils.formatNumber(Math.round(x * 1e6) / 1e6), sx, labelY);
+          }
+
+          ctx.textAlign = 'right';
+          ctx.textBaseline = 'middle';
+          for (let y = startY; y <= endY + majorStep * 0.1; y += majorStep) {
+            if (Math.abs(y) < majorStep * 1e-4) continue;
+            const sy = this.worldToScreen(0, y).y;
+            if (sy < 20 || sy > this.height - 18) continue;
+
+            ctx.beginPath();
+            ctx.moveTo(origin.x - 4, sy);
+            ctx.lineTo(origin.x + 4, sy);
+            ctx.stroke();
+
+            const labelX = Math.min(Math.max(origin.x - 8, 26), this.width - 8);
+            ctx.fillText(MathUtils.formatNumber(Math.round(y * 1e6) / 1e6), labelX, sy);
+          }
+        }
+
+        drawBoundaryLine(ctx, a, b, op, c, options = {}) {
+          const color = options.color || '#2563eb';
+          const alpha = options.alpha ?? 1;
+          const labelPrefix = options.labelPrefix || 'd';
+
+          const topLeft = this.screenToWorld(-20, -20);
+          const bottomRight = this.screenToWorld(this.width + 20, this.height + 20);
+          const xMin = topLeft.x;
+          const xMax = bottomRight.x;
+          const yMin = bottomRight.y;
+          const yMax = topLeft.y;
+
+          const pts = [];
+          if (Math.abs(b) > 1e-9) {
+            const yAtXMin = (c - a * xMin) / b;
+            if (yAtXMin >= yMin - 1e-6 && yAtXMin <= yMax + 1e-6) pts.push({ x: xMin, y: yAtXMin });
+            const yAtXMax = (c - a * xMax) / b;
+            if (yAtXMax >= yMin - 1e-6 && yAtXMax <= yMax + 1e-6) pts.push({ x: xMax, y: yAtXMax });
+          }
+          if (Math.abs(a) > 1e-9) {
+            const xAtYMin = (c - b * yMin) / a;
+            if (xAtYMin >= xMin - 1e-6 && xAtYMin <= xMax + 1e-6) pts.push({ x: xAtYMin, y: yMin });
+            const xAtYMax = (c - b * yMax) / a;
+            if (xAtYMax >= xMin - 1e-6 && xAtYMax <= xMax + 1e-6) pts.push({ x: xAtYMax, y: yMax });
+          }
+
+          if (pts.length < 2) return;
+
+          let pStart = pts[0];
+          let pEnd = pts[pts.length - 1];
+          for (let i = 0; i < pts.length; i++) {
+            for (let j = i + 1; j < pts.length; j++) {
+              if (Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y) >
+                  Math.hypot(pStart.x - pEnd.x, pStart.y - pEnd.y)) {
+                pStart = pts[i];
+                pEnd = pts[j];
+              }
+            }
+          }
+
+          if (Math.hypot(pStart.x - pEnd.x, pStart.y - pEnd.y) <= 1e-6) return;
+
+          const s1 = this.worldToScreen(pStart.x, pStart.y);
+          const s2 = this.worldToScreen(pEnd.x, pEnd.y);
+
+          ctx.save();
+          ctx.globalAlpha = alpha;
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 2.6;
+
+          const isStrict = (op === '<' || op === '>');
+          if (!options.skipLineStroke) {
+            if (isStrict) {
+              this.strokeAlignedDashedSegment(ctx, s1, s2);
+            } else {
+              ctx.setLineDash([]);
+              ctx.beginPath();
+              ctx.moveTo(s1.x, s1.y);
+              ctx.lineTo(s2.x, s2.y);
+              ctx.stroke();
+            }
+          }
+
+          const eqLabel = `${labelPrefix}: ${MathUtils.formatLineEquation(a, b, c)}`;
+          const t = options.labelT ?? 0.32;
+          let lx = s1.x + (s2.x - s1.x) * t;
+          let ly = s1.y + (s2.y - s1.y) * t;
+
+          lx = Math.min(Math.max(lx, 95), this.width - 155);
+          ly = Math.min(Math.max(ly, 68), this.height - 68);
+
+          ctx.font = 'bold 12.5px "Segoe UI", sans-serif';
+          const textMetrics = ctx.measureText(eqLabel);
+          const padX = 8;
+          const boxW = Math.round(textMetrics.width + padX * 2);
+          const boxH = 24;
+
+          this.roundRect(ctx, lx + 8, ly - boxH - 5, boxW, boxH, 6);
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.94)';
+          ctx.fill();
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 1.4;
+          ctx.stroke();
+
+          ctx.fillStyle = color;
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(eqLabel, lx + 8 + padX, ly - boxH / 2 - 5);
+
+          ctx.restore();
+        }
+
+        drawPointMarker(ctx, wx, wy, opts = {}) {
+          const screen = this.worldToScreen(wx, wy);
+          const color = opts.color || '#2563eb';
+          const isInvalid = Boolean(opts.isInvalid);
+          const isTestPoint = Boolean(opts.isTestPoint);
+
+          ctx.save();
+
+          ctx.beginPath();
+          ctx.arc(screen.x, screen.y, isTestPoint ? 12 : (isInvalid ? 9 : 10), 0, Math.PI * 2);
+          ctx.fillStyle = isInvalid
+            ? 'rgba(220, 38, 38, 0.16)'
+            : (isTestPoint ? 'rgba(245, 158, 11, 0.22)' : 'rgba(37, 99, 235, 0.16)');
+          ctx.fill();
+
+          if (isInvalid) {
+            ctx.strokeStyle = '#dc2626';
+            ctx.lineWidth = 2.4;
+            const r = 5;
+            ctx.beginPath();
+            ctx.moveTo(screen.x - r, screen.y - r);
+            ctx.lineTo(screen.x + r, screen.y + r);
+            ctx.moveTo(screen.x + r, screen.y - r);
+            ctx.lineTo(screen.x - r, screen.y + r);
+            ctx.stroke();
+          } else {
+            ctx.beginPath();
+            ctx.arc(screen.x, screen.y, isTestPoint ? 6.5 : 5.5, 0, Math.PI * 2);
+            ctx.fillStyle = opts.fill || color;
+            ctx.fill();
+            ctx.lineWidth = 2.2;
+            ctx.strokeStyle = '#ffffff';
+            ctx.stroke();
+          }
+
+          if (opts.label) {
+            ctx.font = 'bold 12.5px "Segoe UI", sans-serif';
+            const tw = ctx.measureText(opts.label).width;
+            const boxW = Math.round(tw + 14);
+            const boxH = 23;
+            const bx = Math.round(screen.x + 10);
+            const by = Math.round(isTestPoint ? screen.y + 8 : screen.y - 28);
+
+            this.roundRect(ctx, bx, by, boxW, boxH, 6);
+            ctx.fillStyle = isInvalid ? '#fef2f2' : (isTestPoint ? '#fffbeb' : 'rgba(255, 255, 255, 0.95)');
+            ctx.fill();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 1.4;
+            ctx.stroke();
+
+            ctx.fillStyle = isInvalid ? '#b91c1c' : (isTestPoint ? '#92400e' : '#0f172a');
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(opts.label, bx + 7, by + boxH / 2);
+          }
+
+          ctx.restore();
+        }
+
+        drawHoverSnapCursor(ctx, wx, wy) {
+          const screen = this.worldToScreen(wx, wy);
+          ctx.save();
+
+          ctx.beginPath();
+          ctx.arc(screen.x, screen.y, 8, 0, Math.PI * 2);
+          ctx.strokeStyle = '#f59e0b';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(screen.x, screen.y, 3.2, 0, Math.PI * 2);
+          ctx.fillStyle = '#f59e0b';
+          ctx.fill();
+
+          const label = `(${MathUtils.formatNumber(wx)}; ${MathUtils.formatNumber(wy)})`;
+          ctx.font = '600 11.5px "Segoe UI", sans-serif';
+          const tw = ctx.measureText(label).width;
+          const bx = Math.round(screen.x + 12);
+          const by = Math.round(screen.y + 10);
+
+          this.roundRect(ctx, bx, by, Math.round(tw + 12), 21, 5);
+          ctx.fillStyle = 'rgba(15, 23, 42, 0.86)';
+          ctx.fill();
+
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(label, bx + 6, by + 10.5);
+
+          ctx.restore();
+        }
+
+        roundRect(ctx, x, y, w, h, r) {
+          const radius = Math.max(0, Math.min(r, w / 2, h / 2));
+          ctx.beginPath();
+          ctx.moveTo(x + radius, y);
+          ctx.lineTo(x + w - radius, y);
+          ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+          ctx.lineTo(x + w, y + h - radius);
+          ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+          ctx.lineTo(x + radius, y + h);
+          ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+          ctx.lineTo(x, y + radius);
+          ctx.quadraticCurveTo(x, y, x + radius, y);
+          ctx.closePath();
+        }
+      }
+
+      /* =========================================================================
+       * 4. BỘ ĐIỀU KHIỂN GIAO DIỆN & LOGIC BƯỚC 1 + BƯỚC 2 + BƯỚC 3 (UIController)
+       * ========================================================================= */
+      const UIController = {
+        plane: null,
+
+        init() {
+          const canvas = document.getElementById('coordCanvas');
+          const wrapper = document.getElementById('canvasWrapper');
+          this.plane = new CoordinatePlane(canvas, wrapper);
+
+          this.cacheDOM();
+          this.bindEvents();
+          this.updateLiveInequalityPreview();
+          this.renderSystemDraftRows();
+          this.updateTopStepper();
+        },
+
+        cacheDOM() {
+          this.els = {
+            tabSingleBtn: document.getElementById('tabSingleBtn'),
+            tabSystemBtn: document.getElementById('tabSystemBtn'),
+            singleInputCard: document.getElementById('singleInputCard'),
+            systemInputCard: document.getElementById('systemInputCard'),
+
+            // Thanh tiến trình trực quan 4 bước & khung cuộn cột trái
+            flowStepInput: document.getElementById('flowStepInput'),
+            flowStep1: document.getElementById('flowStep1'),
+            flowStep2: document.getElementById('flowStep2'),
+            flowStep3: document.getElementById('flowStep3'),
+            leftPanelScroll: document.getElementById('leftPanelScroll'),
+
+            // Single inputs
+            inputA: document.getElementById('inputA'),
+            inputB: document.getElementById('inputB'),
+            inputOp: document.getElementById('inputOp'),
+            inputC: document.getElementById('inputC'),
+            liveInequalityPreview: document.getElementById('liveInequalityPreview'),
+            coeffFeedback: document.getElementById('coeffFeedback'),
+            startDrawBtn: document.getElementById('startDrawBtn'),
+            resetAllBtn: document.getElementById('resetAllBtn'),
+
+            // System editor inputs
+            systemCountBadge: document.getElementById('systemCountBadge'),
+            systemRowsContainer: document.getElementById('systemRowsContainer'),
+            systemFormFeedback: document.getElementById('systemFormFeedback'),
+            addSystemRowBtn: document.getElementById('addSystemRowBtn'),
+            startSystemBtn: document.getElementById('startSystemBtn'),
+            resetSystemBtn: document.getElementById('resetSystemBtn'),
+
+            // Step progress & system progress strip
+            stepsProgressBar: document.getElementById('stepsProgressBar'),
+            pillStep1: document.getElementById('pillStep1'),
+            pillStep2: document.getElementById('pillStep2'),
+            pillStep3: document.getElementById('pillStep3'),
+            systemProgressStrip: document.getElementById('systemProgressStrip'),
+            sysProgressHeading: document.getElementById('sysProgressHeading'),
+            sysProgressCounter: document.getElementById('sysProgressCounter'),
+            sysProgressChips: document.getElementById('sysProgressChips'),
+
+            // Step 1
+            idleGuidePrompt: document.getElementById('idleGuidePrompt'),
+            step1Container: document.getElementById('step1Container'),
+            step1HeadingLabel: document.getElementById('step1HeadingLabel'),
+            boundaryEqText: document.getElementById('boundaryEqText'),
+            boundaryLineTypeDesc: document.getElementById('boundaryLineTypeDesc'),
+            point1Box: document.getElementById('point1Box'),
+            point1StatusTag: document.getElementById('point1StatusTag'),
+            p1XInput: document.getElementById('p1XInput'),
+            p1YInput: document.getElementById('p1YInput'),
+            checkP1Btn: document.getElementById('checkP1Btn'),
+            point1Feedback: document.getElementById('point1Feedback'),
+            point2Box: document.getElementById('point2Box'),
+            point2StatusTag: document.getElementById('point2StatusTag'),
+            p2XInput: document.getElementById('p2XInput'),
+            p2YInput: document.getElementById('p2YInput'),
+            checkP2Btn: document.getElementById('checkP2Btn'),
+            point2Feedback: document.getElementById('point2Feedback'),
+            step1CompactDone: document.getElementById('step1CompactDone'),
+            step1CompactText: document.getElementById('step1CompactText'),
+
+            // Step 2
+            step2Section: document.getElementById('step2Section'),
+            step2HeadingLabel: document.getElementById('step2HeadingLabel'),
+            step2IneqText: document.getElementById('step2IneqText'),
+            step2OriginHint: document.getElementById('step2OriginHint'),
+            testPointBox: document.getElementById('testPointBox'),
+            testPointStatusTag: document.getElementById('testPointStatusTag'),
+            mXInput: document.getElementById('mXInput'),
+            mYInput: document.getElementById('mYInput'),
+            checkTestPointBtn: document.getElementById('checkTestPointBtn'),
+            quickOriginBtn: document.getElementById('quickOriginBtn'),
+            testPointFeedback: document.getElementById('testPointFeedback'),
+            substitutionCard: document.getElementById('substitutionCard'),
+            subPointLabel: document.getElementById('subPointLabel'),
+            subIneqLabel: document.getElementById('subIneqLabel'),
+            subExpressionBox: document.getElementById('subExpressionBox'),
+            subOpSymbol: document.getElementById('subOpSymbol'),
+            btnConfirmSatisfy: document.getElementById('btnConfirmSatisfy'),
+            btnConfirmNotSatisfy: document.getElementById('btnConfirmNotSatisfy'),
+            step2ConfirmFeedback: document.getElementById('step2ConfirmFeedback'),
+            finalCompleteCard: document.getElementById('finalCompleteCard'),
+            finalCompleteTitle: document.getElementById('finalCompleteTitle'),
+            finalCompleteSummary: document.getElementById('finalCompleteSummary'),
+            nextSystemIneqRow: document.getElementById('nextSystemIneqRow'),
+            nextSystemIneqBtn: document.getElementById('nextSystemIneqBtn'),
+
+            // Step 3
+            step3Section: document.getElementById('step3Section'),
+            step3ResultBanner: document.getElementById('step3ResultBanner'),
+            step3VertexPanel: document.getElementById('step3VertexPanel'),
+            vertexProgressBadge: document.getElementById('vertexProgressBadge'),
+            vertexCardsList: document.getElementById('vertexCardsList'),
+            vertexAllDoneCard: document.getElementById('vertexAllDoneCard'),
+            fitSolutionViewBtn: document.getElementById('fitSolutionViewBtn'),
+            redoSystemBtn: document.getElementById('redoSystemBtn'),
+
+            // Canvas overlays
+            canvasStatusDot: document.getElementById('canvasStatusDot'),
+            canvasStatusText: document.getElementById('canvasStatusText'),
+            zoomInBtn: document.getElementById('zoomInBtn'),
+            zoomOutBtn: document.getElementById('zoomOutBtn'),
+            resetViewBtn: document.getElementById('resetViewBtn'),
+            coordCanvas: document.getElementById('coordCanvas')
+          };
+        },
+
+        bindEvents() {
+          this.els.tabSingleBtn.addEventListener('click', () => this.switchMode('single'));
+          this.els.tabSystemBtn.addEventListener('click', () => this.switchMode('system'));
+
+          // Ví dụ mẫu nhanh Toán 10
+          document.querySelectorAll('.quick-example-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+              this.runQuickExample(btn.dataset.example);
+            });
+          });
+
+          // Single mode events
+          ['inputA', 'inputB', 'inputOp', 'inputC'].forEach((id) => {
+            this.els[id].addEventListener('input', () => this.updateLiveInequalityPreview());
+            this.els[id].addEventListener('change', () => this.updateLiveInequalityPreview());
+          });
+
+          document.querySelectorAll('.single-preset').forEach((chip) => {
+            chip.addEventListener('click', () => {
+              this.els.inputA.value = chip.dataset.a;
+              this.els.inputB.value = chip.dataset.b;
+              this.els.inputOp.value = chip.dataset.op;
+              this.els.inputC.value = chip.dataset.c;
+              this.updateLiveInequalityPreview();
+              this.startSingleInequality();
+            });
+          });
+
+          this.els.startDrawBtn.addEventListener('click', () => this.startSingleInequality());
+          this.els.resetAllBtn.addEventListener('click', () => this.resetAll());
+
+          // System mode events
+          document.querySelectorAll('.system-preset').forEach((chip) => {
+            chip.addEventListener('click', () => {
+              const presetKey = chip.dataset.preset;
+              const items = SYSTEM_PRESETS[presetKey];
+              if (!items) return;
+              AppState.systemDrafts = items.map((it) => ({
+                a: String(it.a),
+                b: String(it.b),
+                op: it.op,
+                c: String(it.c)
+              }));
+              this.renderSystemDraftRows();
+              this.startSystemExecution();
+            });
+          });
+
+          this.els.addSystemRowBtn.addEventListener('click', () => this.addSystemDraftRow());
+          this.els.startSystemBtn.addEventListener('click', () => this.startSystemExecution());
+          this.els.resetSystemBtn.addEventListener('click', () => this.resetAll({ resetView: true }));
+
+          this.els.nextSystemIneqBtn.addEventListener('click', () => this.advanceToNextSystemInequality());
+          this.els.fitSolutionViewBtn.addEventListener('click', () => {
+            if (AppState.systemResult && AppState.systemResult.type === 'bounded') {
+              this.plane.fitToPolygon(AppState.systemResult.vertices);
+            }
+          });
+          this.els.redoSystemBtn.addEventListener('click', () => this.resetAll({ resetView: true }));
+
+          // Step 1 point validation
+          this.els.checkP1Btn.addEventListener('click', () => this.validatePoint1());
+          this.els.checkP2Btn.addEventListener('click', () => this.validatePoint2());
+          const onEnterP1 = (e) => { if (e.key === 'Enter') this.validatePoint1(); };
+          const onEnterP2 = (e) => { if (e.key === 'Enter') this.validatePoint2(); };
+          this.els.p1XInput.addEventListener('keydown', onEnterP1);
+          this.els.p1YInput.addEventListener('keydown', onEnterP1);
+          this.els.p2XInput.addEventListener('keydown', onEnterP2);
+          this.els.p2YInput.addEventListener('keydown', onEnterP2);
+
+          // Step 2 test point & confirmation
+          this.els.checkTestPointBtn.addEventListener('click', () => this.validateTestPoint());
+          const onEnterM = (e) => { if (e.key === 'Enter') this.validateTestPoint(); };
+          this.els.mXInput.addEventListener('keydown', onEnterM);
+          this.els.mYInput.addEventListener('keydown', onEnterM);
+          this.els.quickOriginBtn.addEventListener('click', () => {
+            this.els.mXInput.value = '0';
+            this.els.mYInput.value = '0';
+            this.validateTestPoint();
+          });
+
+          this.els.btnConfirmSatisfy.addEventListener('click', () => this.verifyStudentConfirmation(true));
+          this.els.btnConfirmNotSatisfy.addEventListener('click', () => this.verifyStudentConfirmation(false));
+
+          // Canvas controls
+          this.els.zoomInBtn.addEventListener('click', () => {
+            this.plane.zoomAt(1.22, this.plane.width / 2, this.plane.height / 2);
+          });
+          this.els.zoomOutBtn.addEventListener('click', () => {
+            this.plane.zoomAt(1 / 1.22, this.plane.width / 2, this.plane.height / 2);
+          });
+          this.els.resetViewBtn.addEventListener('click', () => {
+            this.plane.resetView();
+          });
+        },
+
+        switchMode(mode) {
+          if (AppState.mode === mode) return;
+          AppState.mode = mode;
+          const isSingle = mode === 'single';
+
+          this.els.tabSingleBtn.classList.toggle('active', isSingle);
+          this.els.tabSingleBtn.setAttribute('aria-selected', String(isSingle));
+          this.els.tabSystemBtn.classList.toggle('active', !isSingle);
+          this.els.tabSystemBtn.setAttribute('aria-selected', String(!isSingle));
+
+          this.els.singleInputCard.style.display = isSingle ? 'block' : 'none';
+          this.els.systemInputCard.style.display = isSingle ? 'none' : 'block';
+
+          this.els.stepsProgressBar.classList.toggle('three-steps', !isSingle);
+          this.els.pillStep3.style.display = isSingle ? 'none' : 'flex';
+
+          this.resetAll({ resetView: true });
+        },
+
+        runQuickExample(key) {
+          const ex = QUICK_EXAMPLES[key];
+          if (!ex) return;
+
+          if (AppState.mode !== ex.mode) {
+            this.switchMode(ex.mode);
+          } else {
+            this.resetAll({ resetView: true });
+          }
+
+          if (ex.mode === 'single') {
+            this.els.inputA.value = ex.inequality.a;
+            this.els.inputB.value = ex.inequality.b;
+            this.els.inputOp.value = ex.inequality.op;
+            this.els.inputC.value = ex.inequality.c;
+            this.updateLiveInequalityPreview();
+            this.startSingleInequality();
+          } else {
+            AppState.systemDrafts = ex.list.map((it) => ({
+              a: String(it.a),
+              b: String(it.b),
+              op: it.op,
+              c: String(it.c)
+            }));
+            this.renderSystemDraftRows();
+            this.startSystemExecution();
+          }
+        },
+
+        scrollToElement(el) {
+          if (el && typeof el.scrollIntoView === 'function') {
+            el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        },
+
+        updateTopStepper() {
+          const { flowStepInput, flowStep1, flowStep2, flowStep3 } = this.els;
+          if (!flowStepInput || !flowStep1 || !flowStep2 || !flowStep3) return;
+
+          flowStepInput.className = 'flow-step';
+          flowStep1.className = 'flow-step';
+          flowStep2.className = 'flow-step';
+          flowStep3.className = AppState.mode === 'single' ? 'flow-step optional-step' : 'flow-step';
+
+          const step = AppState.step;
+          if (step === 'IDLE') {
+            flowStepInput.classList.add('active');
+            return;
+          }
+
+          flowStepInput.classList.add('completed');
+
+          if (step === 'STEP1_POINT1' || step === 'STEP1_POINT2') {
+            flowStep1.classList.add('active');
+            return;
+          }
+
+          flowStep1.classList.add('completed');
+
+          if (step === 'STEP2_PICK_POINT' || step === 'STEP2_CONFIRM') {
+            flowStep2.classList.add('active');
+            return;
+          }
+
+          flowStep2.classList.add('completed');
+
+          if (step === 'STEP3_SYSTEM_RESULT') {
+            const res = AppState.systemResult;
+            if (res && res.type === 'bounded') {
+              const allDone = res.vertices.length > 0 && res.vertices.every((v) => v.verified);
+              flowStep3.classList.add(allDone ? 'completed' : 'active');
+            } else {
+              flowStep3.classList.add('completed');
+            }
+          }
+        },
+
+        /* =====================================================================
+         * QUẢN LÝ DANH SÁCH BPT TRONG HỆ (2–6 BPT)
+         * ===================================================================== */
+        renderSystemDraftRows() {
+          const container = this.els.systemRowsContainer;
+          container.innerHTML = '';
+
+          const count = AppState.systemDrafts.length;
+          this.els.systemCountBadge.textContent = `${count} / 6 BPT`;
+          this.els.addSystemRowBtn.disabled = count >= 6;
+
+          AppState.systemDrafts.forEach((draft, idx) => {
+            const palette = SYSTEM_PALETTE[idx % SYSTEM_PALETTE.length];
+            const row = document.createElement('div');
+            row.className = 'sys-row';
+            row.dataset.index = String(idx);
+
+            row.innerHTML = `
+              <span class="sys-row-badge" style="background: ${palette.line};">d${idx + 1}</span>
+              <div class="coeff-input-group">
+                <input class="coeff-input sys-a" type="text" value="${draft.a}" aria-label="Hệ số a của BPT ${idx + 1}" />
+                <span class="math-var">x</span>
+              </div>
+              <span class="math-plus">+</span>
+              <div class="coeff-input-group">
+                <input class="coeff-input sys-b" type="text" value="${draft.b}" aria-label="Hệ số b của BPT ${idx + 1}" />
+                <span class="math-var">y</span>
+              </div>
+              <select class="op-select sys-op" aria-label="Dấu BPT ${idx + 1}">
+                <option value="<=" ${draft.op === '<=' ? 'selected' : ''}>&le;</option>
+                <option value=">=" ${draft.op === '>=' ? 'selected' : ''}>&ge;</option>
+                <option value="<" ${draft.op === '<' ? 'selected' : ''}>&lt;</option>
+                <option value=">" ${draft.op === '>' ? 'selected' : ''}>&gt;</option>
+              </select>
+              <div class="coeff-input-group">
+                <input class="coeff-input sys-c" type="text" value="${draft.c}" aria-label="Hệ số c của BPT ${idx + 1}" />
+              </div>
+              <button type="button" class="sys-delete-btn" title="Xóa bất phương trình này" ${count <= 2 ? 'disabled' : ''}>&times;</button>
+            `;
+
+            const aInput = row.querySelector('.sys-a');
+            const bInput = row.querySelector('.sys-b');
+            const opSel = row.querySelector('.sys-op');
+            const cInput = row.querySelector('.sys-c');
+            const delBtn = row.querySelector('.sys-delete-btn');
+
+            aInput.addEventListener('input', () => { AppState.systemDrafts[idx].a = aInput.value; });
+            bInput.addEventListener('input', () => { AppState.systemDrafts[idx].b = bInput.value; });
+            opSel.addEventListener('change', () => { AppState.systemDrafts[idx].op = opSel.value; });
+            cInput.addEventListener('input', () => { AppState.systemDrafts[idx].c = cInput.value; });
+            delBtn.addEventListener('click', () => {
+              if (AppState.systemDrafts.length <= 2) return;
+              AppState.systemDrafts.splice(idx, 1);
+              this.renderSystemDraftRows();
+            });
+
+            container.appendChild(row);
+          });
+        },
+
+        addSystemDraftRow() {
+          if (AppState.systemDrafts.length >= 6) return;
+          const defaults = [
+            { a: '1', b: '1', op: '<=', c: '6' },
+            { a: '1', b: '-1', op: '<=', c: '2' },
+            { a: '0', b: '1', op: '<=', c: '4' },
+            { a: '1', b: '0', op: '<=', c: '4' }
+          ];
+          const next = defaults[AppState.systemDrafts.length % defaults.length];
+          AppState.systemDrafts.push({ ...next });
+          this.renderSystemDraftRows();
+        },
+
+        renderSystemProgressStrip() {
+          const rows = this.els.systemRowsContainer.children || [];
+          for (let i = 0; i < rows.length; i++) {
+            rows[i].classList.remove('active-sys-row', 'done-sys-row');
+          }
+
+          if (AppState.mode !== 'system' || AppState.systemList.length === 0) {
+            this.els.systemProgressStrip.classList.remove('show');
+            return;
+          }
+
+          this.els.systemProgressStrip.classList.add('show');
+          const doneCount = AppState.systemList.filter((it) => it.doneStep2).length;
+          const total = AppState.systemList.length;
+          this.els.sysProgressCounter.textContent = `Đã xong ${doneCount} / ${total} BPT`;
+
+          const chips = this.els.sysProgressChips;
+          chips.innerHTML = '';
+
+          AppState.systemList.forEach((item, idx) => {
+            if (rows[idx]) {
+              if (item.doneStep2) rows[idx].classList.add('done-sys-row');
+              else if (idx === AppState.activeSystemIndex && AppState.step !== 'STEP3_SYSTEM_RESULT') {
+                rows[idx].classList.add('active-sys-row');
+              }
+            }
+
+            const palette = SYSTEM_PALETTE[idx % SYSTEM_PALETTE.length];
+            const chip = document.createElement('div');
+            let cls = 'sys-chip-item';
+            if (item.doneStep2) cls += ' done';
+            else if (idx === AppState.activeSystemIndex && AppState.step !== 'STEP3_SYSTEM_RESULT') cls += ' current';
+            chip.className = cls;
+
+            const icon = item.doneStep2 ? '✓' : (idx === AppState.activeSystemIndex && AppState.step !== 'STEP3_SYSTEM_RESULT' ? '●' : '');
+            chip.innerHTML = `
+              <span class="sys-chip-dot" style="background: ${palette.line};"></span>
+              <span><strong>d${idx + 1}:</strong> ${MathUtils.formatInequality(item.a, item.b, item.op, item.c)} ${icon}</span>
+            `;
+            chips.appendChild(chip);
+          });
+        },
+
+        startSystemExecution() {
+          if (AppState.systemDrafts.length < 2 || AppState.systemDrafts.length > 6) {
+            this.showFeedback(this.els.systemFormFeedback, 'error', 'Hệ bất phương trình cần có từ <strong>2 đến 6</strong> bất phương trình. Em hãy bổ sung hoặc điều chỉnh lại nhé!');
+            return;
+          }
+
+          const parsedList = [];
+          for (let i = 0; i < AppState.systemDrafts.length; i++) {
+            const d = AppState.systemDrafts[i];
+            const pa = MathUtils.parseNumber(d.a, { emptyAsZero: true });
+            const pb = MathUtils.parseNumber(d.b, { emptyAsZero: true });
+            const pc = MathUtils.parseNumber(d.c);
+            if (!pa.valid || !pb.valid || !pc.valid) {
+              this.showFeedback(
+                this.els.systemFormFeedback,
+                'error',
+                `<strong>Chưa hợp lệ ở BPT (${i + 1}) — đường d${i + 1}:</strong> ${!pa.valid ? pa.error : (!pb.valid ? pb.error : pc.error)}`
+              );
+              return;
+            }
+            if (Math.abs(pa.value) < 1e-9 && Math.abs(pb.value) < 1e-9) {
+              this.showFeedback(
+                this.els.systemFormFeedback,
+                'error',
+                `<strong>Chưa hợp lệ ở BPT (${i + 1}) — đường d${i + 1}:</strong> Hệ số <strong>a</strong> và <strong>b</strong> không được đồng thời bằng 0 (cần ít nhất một hệ số khác 0 để vẽ đường thẳng). Em hãy sửa lại nhé!`
+              );
+              return;
+            }
+            parsedList.push({
+              a: pa.value,
+              b: pb.value,
+              op: d.op,
+              c: pc.value,
+              doneStep1: false,
+              doneStep2: false,
+              p1: null,
+              p2: null,
+              testPoint: null
+            });
+          }
+
+          this.hideFeedback(this.els.systemFormFeedback);
+
+          AppState.systemList = parsedList;
+          AppState.activeSystemIndex = 0;
+          AppState.systemResult = null;
+          this.els.step3Section.classList.remove('show');
+
+          this.beginStep1ForInequality(parsedList[0], 'd1');
+        },
+
+        advanceToNextSystemInequality() {
+          if (AppState.mode !== 'system') return;
+          const nextIdx = AppState.activeSystemIndex + 1;
+          if (nextIdx < AppState.systemList.length) {
+            AppState.activeSystemIndex = nextIdx;
+            this.beginStep1ForInequality(AppState.systemList[nextIdx], `d${nextIdx + 1}`);
+          } else {
+            this.enterStep3SystemResult();
+          }
+        },
+
+        /* =====================================================================
+         * BẤT PHƯƠNG TRÌNH ĐƠN & DÙNG CHUNG CHO TỪNG BPT TRONG HỆ
+         * ===================================================================== */
+        updateLiveInequalityPreview() {
+          const parsedA = MathUtils.parseNumber(this.els.inputA.value, { emptyAsZero: true });
+          const parsedB = MathUtils.parseNumber(this.els.inputB.value, { emptyAsZero: true });
+          const parsedC = MathUtils.parseNumber(this.els.inputC.value);
+          const op = this.els.inputOp.value;
+
+          if (!parsedA.valid || !parsedB.valid || !parsedC.valid) {
+            this.els.liveInequalityPreview.textContent = 'Đang nhập hệ số...';
+            return;
+          }
+          if (Math.abs(parsedA.value) < 1e-9 && Math.abs(parsedB.value) < 1e-9) {
+            this.els.liveInequalityPreview.textContent = 'a và b không được đồng thời bằng 0';
+            return;
+          }
+          this.els.liveInequalityPreview.textContent = MathUtils.formatInequality(
+            parsedA.value,
+            parsedB.value,
+            op,
+            parsedC.value
+          );
+        },
+
+        showFeedback(el, type, htmlContent) {
+          el.className = `feedback-box show feedback-${type}`;
+          el.innerHTML = htmlContent;
+        },
+
+        hideFeedback(el) {
+          el.className = 'feedback-box';
+          el.innerHTML = '';
+        },
+
+        startSingleInequality() {
+          const parsedA = MathUtils.parseNumber(this.els.inputA.value, { emptyAsZero: true });
+          const parsedB = MathUtils.parseNumber(this.els.inputB.value, { emptyAsZero: true });
+          const parsedC = MathUtils.parseNumber(this.els.inputC.value);
+          const op = this.els.inputOp.value;
+
+          if (!parsedA.valid) {
+            this.showFeedback(this.els.coeffFeedback, 'error', `<strong>Hệ số a chưa hợp lệ:</strong> ${parsedA.error}`);
+            return;
+          }
+          if (!parsedB.valid) {
+            this.showFeedback(this.els.coeffFeedback, 'error', `<strong>Hệ số b chưa hợp lệ:</strong> ${parsedB.error}`);
+            return;
+          }
+          if (!parsedC.valid) {
+            this.showFeedback(this.els.coeffFeedback, 'error', `<strong>Hệ số c chưa hợp lệ:</strong> ${parsedC.error}`);
+            return;
+          }
+          if (Math.abs(parsedA.value) < 1e-9 && Math.abs(parsedB.value) < 1e-9) {
+            this.showFeedback(
+              this.els.coeffFeedback,
+              'error',
+              '<strong>Hệ số chưa hợp lệ:</strong> Hệ số <strong>a</strong> và <strong>b</strong> không được đồng thời bằng 0 (cần thỏa mãn a² + b² ≠ 0 để tạo đường thẳng). Em hãy sửa lại nhé!'
+            );
+            return;
+          }
+
+          this.hideFeedback(this.els.coeffFeedback);
+          this.beginStep1ForInequality(
+            { a: parsedA.value, b: parsedB.value, op, c: parsedC.value },
+            'd'
+          );
+        },
+
+        getCurrentLineLabel() {
+          return AppState.mode === 'system' ? `d${AppState.activeSystemIndex + 1}` : 'd';
+        },
+
+        beginStep1ForInequality(ineqObj, lineLabel) {
+          AppState.inequality = {
+            a: ineqObj.a,
+            b: ineqObj.b,
+            op: ineqObj.op,
+            c: ineqObj.c
+          };
+          AppState.step = 'STEP1_POINT1';
+          AppState.points.p1 = null;
+          AppState.points.p2 = null;
+          AppState.points.testPoint = null;
+          AppState.invalidMarker = null;
+
+          this.els.idleGuidePrompt.style.display = 'none';
+          this.els.step3Section.classList.remove('show');
+          this.els.step1Container.style.display = 'block';
+
+          this.renderSystemProgressStrip();
+
+          const lineEq = MathUtils.formatLineEquation(ineqObj.a, ineqObj.b, ineqObj.c);
+          const prefixTitle = AppState.mode === 'system'
+            ? `BPT (${AppState.activeSystemIndex + 1}/${AppState.systemList.length}) — Bước 1:`
+            : 'Bước 1:';
+          this.els.step1HeadingLabel.textContent = prefixTitle;
+          this.els.boundaryEqText.textContent = `${lineLabel}: ${lineEq}`;
+
+          const isStrict = (ineqObj.op === '<' || ineqObj.op === '>');
+          const opSymbol = MathUtils.opToSymbol(ineqObj.op);
+          if (isStrict) {
+            this.els.boundaryLineTypeDesc.innerHTML = `
+              Vì bất phương trình có dấu <strong>"${opSymbol}"</strong> nên đường thẳng bờ <strong>${lineLabel}</strong> sẽ vẽ bằng
+              <span class="line-style-tag tag-dashed">--- Nét đứt (Không lấy bờ ${lineLabel})</span>
+            `;
+          } else {
+            this.els.boundaryLineTypeDesc.innerHTML = `
+              Vì bất phương trình có dấu <strong>"${opSymbol}"</strong> nên đường thẳng bờ <strong>${lineLabel}</strong> sẽ vẽ bằng
+              <span class="line-style-tag tag-solid">─── Nét liền (Chứa cả bờ ${lineLabel})</span>
+            `;
+          }
+
+          this.els.p1XInput.value = '';
+          this.els.p1YInput.value = '';
+          this.els.p1XInput.disabled = false;
+          this.els.p1YInput.disabled = false;
+          this.els.checkP1Btn.disabled = false;
+
+          this.els.p2XInput.value = '';
+          this.els.p2YInput.value = '';
+          this.els.p2XInput.disabled = true;
+          this.els.p2YInput.disabled = true;
+          this.els.checkP2Btn.disabled = true;
+
+          this.els.point1Box.className = 'point-box active-point';
+          this.els.point1StatusTag.className = 'point-status-tag waiting';
+          this.els.point1StatusTag.textContent = 'Đang chọn';
+
+          this.els.point2Box.className = 'point-box locked-point';
+          this.els.point2StatusTag.className = 'point-status-tag';
+          this.els.point2StatusTag.textContent = 'Chờ Điểm 1';
+
+          this.hideFeedback(this.els.point1Feedback);
+          this.hideFeedback(this.els.point2Feedback);
+          this.els.step1CompactDone.classList.remove('show');
+          this.els.step2Section.classList.remove('show');
+          this.els.substitutionCard.classList.remove('show');
+          this.els.finalCompleteCard.classList.remove('show');
+          this.els.nextSystemIneqRow.style.display = 'none';
+          this.hideFeedback(this.els.testPointFeedback);
+          this.hideFeedback(this.els.step2ConfirmFeedback);
+
+          this.els.pillStep1.className = 'step-pill active';
+          this.els.pillStep2.className = 'step-pill';
+          this.els.pillStep3.className = 'step-pill';
+          this.updateTopStepper();
+
+          this.els.coordCanvas.classList.add('picking-mode');
+          this.updateCanvasStatus(
+            'picking',
+            `${prefixTitle} Chọn Điểm 1 (x₁; y₁) thuộc ${lineLabel}: ${lineEq} (nhập hoặc bấm trực tiếp lên lưới)`
+          );
+
+          this.scrollToElement(this.els.step1Container);
+          this.els.p1XInput.focus();
+          this.plane.render();
+        },
+
+        onGridPointClicked(snappedX, snappedY) {
+          const strX = MathUtils.formatNumber(snappedX);
+          const strY = MathUtils.formatNumber(snappedY);
+
+          if (AppState.step === 'STEP1_POINT1') {
+            this.els.p1XInput.value = strX;
+            this.els.p1YInput.value = strY;
+            this.validatePoint1();
+          } else if (AppState.step === 'STEP1_POINT2') {
+            this.els.p2XInput.value = strX;
+            this.els.p2YInput.value = strY;
+            this.validatePoint2();
+          } else if (AppState.step === 'STEP2_PICK_POINT' || AppState.step === 'STEP2_CONFIRM') {
+            this.els.mXInput.value = strX;
+            this.els.mYInput.value = strY;
+            this.validateTestPoint();
+          }
+        },
+
+        validatePoint1() {
+          if (AppState.step !== 'STEP1_POINT1') return;
+
+          const parsedX = MathUtils.parseNumber(this.els.p1XInput.value);
+          const parsedY = MathUtils.parseNumber(this.els.p1YInput.value);
+
+          if (!parsedX.valid) {
+            this.showFeedback(this.els.point1Feedback, 'error', `<strong>Hoành độ x₁ chưa hợp lệ:</strong> ${parsedX.error}`);
+            return;
+          }
+          if (!parsedY.valid) {
+            this.showFeedback(this.els.point1Feedback, 'error', `<strong>Tung độ y₁ chưa hợp lệ:</strong> ${parsedY.error}`);
+            return;
+          }
+
+          const { a, b, c } = AppState.inequality;
+          const lineLabel = this.getCurrentLineLabel();
+          const x1 = parsedX.value;
+          const y1 = parsedY.value;
+          const sub = MathUtils.formatSubstitution(a, b, x1, y1, parsedX.display, parsedY.display);
+          const cStr = MathUtils.formatNumber(c);
+          const diff = Math.abs(sub.lhsVal - c);
+
+          if (diff >= EPSILON) {
+            AppState.invalidMarker = {
+              x: x1,
+              y: y1,
+              label: `(${parsedX.display}; ${parsedY.display}) ∉ ${lineLabel}`
+            };
+            this.showFeedback(
+              this.els.point1Feedback,
+              'error',
+              `
+                <div><strong>Chưa đúng rồi! Điểm (${parsedX.display}; ${parsedY.display}) chưa thuộc đường thẳng ${lineLabel}.</strong></div>
+                <div>Thay vào vế trái của <strong>${lineLabel}: ${MathUtils.formatLineEquation(a, b, c)}</strong> ta được:</div>
+                <div class="math-calc-line">VT = ${sub.expr} &ne; ${cStr} (Vế phải)</div>
+                <div style="margin-top: 4px;">Em hãy tính lại hoặc bấm trực tiếp lên đường thẳng trên hình để chọn điểm khác nhé!</div>
+              `
+            );
+            this.plane.render();
+            return;
+          }
+
+          AppState.invalidMarker = null;
+          AppState.points.p1 = { x: x1, y: y1, displayX: parsedX.display, displayY: parsedY.display };
+          AppState.step = 'STEP1_POINT2';
+          this.updateTopStepper();
+
+          this.showFeedback(
+            this.els.point1Feedback,
+            'success',
+            `
+              <div><strong>Chính xác! Điểm A(${parsedX.display}; ${parsedY.display}) thuộc ${lineLabel}.</strong></div>
+              <div class="math-calc-line">Thay vào VT: ${sub.expr} = ${cStr} (Thỏa mãn)</div>
+            `
+          );
+
+          this.els.point1Box.className = 'point-box completed-point';
+          this.els.point1StatusTag.className = 'point-status-tag done';
+          this.els.point1StatusTag.textContent = `✓ A(${parsedX.display}; ${parsedY.display})`;
+          this.els.p1XInput.disabled = true;
+          this.els.p1YInput.disabled = true;
+          this.els.checkP1Btn.disabled = true;
+
+          this.els.point2Box.className = 'point-box active-point';
+          this.els.point2StatusTag.className = 'point-status-tag waiting';
+          this.els.point2StatusTag.textContent = 'Đang chọn';
+          this.els.p2XInput.disabled = false;
+          this.els.p2YInput.disabled = false;
+          this.els.checkP2Btn.disabled = false;
+          this.scrollToElement(this.els.point2Box);
+          this.els.p2XInput.focus();
+
+          const lineEq = MathUtils.formatLineEquation(a, b, c);
+          this.updateCanvasStatus(
+            'picking',
+            `Bước 1.2: Đã có Điểm A(${parsedX.display}; ${parsedY.display}). Chọn Điểm 2 phân biệt thuộc ${lineLabel}: ${lineEq}`
+          );
+
+          this.plane.render();
+        },
+
+        validatePoint2() {
+          if (AppState.step !== 'STEP1_POINT2') return;
+
+          const parsedX = MathUtils.parseNumber(this.els.p2XInput.value);
+          const parsedY = MathUtils.parseNumber(this.els.p2YInput.value);
+
+          if (!parsedX.valid) {
+            this.showFeedback(this.els.point2Feedback, 'error', `<strong>Hoành độ x₂ chưa hợp lệ:</strong> ${parsedX.error}`);
+            return;
+          }
+          if (!parsedY.valid) {
+            this.showFeedback(this.els.point2Feedback, 'error', `<strong>Tung độ y₂ chưa hợp lệ:</strong> ${parsedY.error}`);
+            return;
+          }
+
+          const x2 = parsedX.value;
+          const y2 = parsedY.value;
+          const p1 = AppState.points.p1;
+          const lineLabel = this.getCurrentLineLabel();
+
+          if (p1 && Math.hypot(x2 - p1.x, y2 - p1.y) < EPSILON) {
+            this.showFeedback(
+              this.els.point2Feedback,
+              'error',
+              `
+                <div><strong>Điểm 2 bị trùng với Điểm 1!</strong></div>
+                <div>Tọa độ <strong>(${parsedX.display}; ${parsedY.display})</strong> trùng với điểm <strong>A(${p1.displayX}; ${p1.displayY})</strong>. Để vẽ được đường thẳng, em hãy chọn một điểm khác nhé!</div>
+              `
+            );
+            return;
+          }
+
+          const { a, b, c } = AppState.inequality;
+          const sub = MathUtils.formatSubstitution(a, b, x2, y2, parsedX.display, parsedY.display);
+          const cStr = MathUtils.formatNumber(c);
+          const diff = Math.abs(sub.lhsVal - c);
+
+          if (diff >= EPSILON) {
+            AppState.invalidMarker = {
+              x: x2,
+              y: y2,
+              label: `(${parsedX.display}; ${parsedY.display}) ∉ ${lineLabel}`
+            };
+            this.showFeedback(
+              this.els.point2Feedback,
+              'error',
+              `
+                <div><strong>Chưa đúng rồi! Điểm (${parsedX.display}; ${parsedY.display}) chưa thuộc đường thẳng ${lineLabel}.</strong></div>
+                <div>Thay vào vế trái của <strong>${lineLabel}: ${MathUtils.formatLineEquation(a, b, c)}</strong> ta được:</div>
+                <div class="math-calc-line">VT = ${sub.expr} &ne; ${cStr} (Vế phải)</div>
+                <div style="margin-top: 4px;">Em hãy tính lại hoặc chọn một điểm khác thuộc ${lineLabel} nhé!</div>
+              `
+            );
+            this.plane.render();
+            return;
+          }
+
+          AppState.invalidMarker = null;
+          AppState.points.p2 = { x: x2, y: y2, displayX: parsedX.display, displayY: parsedY.display };
+
+          if (AppState.mode === 'system') {
+            const sysItem = AppState.systemList[AppState.activeSystemIndex];
+            sysItem.doneStep1 = true;
+            sysItem.p1 = AppState.points.p1;
+            sysItem.p2 = AppState.points.p2;
+          }
+
+          this.showFeedback(
+            this.els.point2Feedback,
+            'success',
+            `
+              <div><strong>Chính xác! Điểm B(${parsedX.display}; ${parsedY.display}) thuộc ${lineLabel}.</strong></div>
+              <div class="math-calc-line">Thay vào VT: ${sub.expr} = ${cStr} (Thỏa mãn)</div>
+            `
+          );
+
+          this.els.point2Box.className = 'point-box completed-point';
+          this.els.point2StatusTag.className = 'point-status-tag done';
+          this.els.point2StatusTag.textContent = `✓ B(${parsedX.display}; ${parsedY.display})`;
+          this.els.p2XInput.disabled = true;
+          this.els.p2YInput.disabled = true;
+          this.els.checkP2Btn.disabled = true;
+
+          this.startStep2();
+        },
+
+        startStep2() {
+          AppState.step = 'STEP2_PICK_POINT';
+          AppState.points.testPoint = null;
+          AppState.invalidMarker = null;
+
+          const { a, b, op, c } = AppState.inequality;
+          const p1 = AppState.points.p1;
+          const p2 = AppState.points.p2;
+          const lineLabel = this.getCurrentLineLabel();
+          const lineEq = MathUtils.formatLineEquation(a, b, c);
+          const ineqStr = MathUtils.formatInequality(a, b, op, c);
+          const isStrict = (op === '<' || op === '>');
+          const strokeType = isStrict ? 'nét đứt' : 'nét liền';
+
+          this.els.pillStep1.className = 'step-pill completed';
+          this.els.pillStep2.className = 'step-pill active';
+          this.updateTopStepper();
+
+          this.els.step1CompactText.innerHTML = `✅ <strong>Xong Bước 1:</strong> Đã vẽ bờ <strong>${lineLabel}: ${lineEq}</strong> (${strokeType}) qua A(${p1.displayX}; ${p1.displayY}) và B(${p2.displayX}; ${p2.displayY}).`;
+          this.els.step1CompactDone.classList.add('show');
+
+          this.els.step2HeadingLabel.textContent = AppState.mode === 'system'
+            ? `BPT (${AppState.activeSystemIndex + 1}/${AppState.systemList.length}) — Bước 2:`
+            : 'Bước 2:';
+          this.els.step2IneqText.textContent = ineqStr;
+
+          if (Math.abs(c) >= EPSILON) {
+            this.els.step2OriginHint.innerHTML = `💡 <em>Gợi ý:</em> Vì <strong>c = ${MathUtils.formatNumber(c)} &ne; 0</strong> nên đường thẳng <strong>${lineLabel}</strong> không đi qua gốc tọa độ. Em nên chọn điểm thử <strong>O(0; 0)</strong> để tính nhanh nhất!`;
+            this.els.quickOriginBtn.style.display = 'inline-block';
+          } else {
+            this.els.step2OriginHint.innerHTML = `💡 <em>Gợi ý:</em> Vì <strong>c = 0</strong> nên đường thẳng <strong>${lineLabel}</strong> đi qua O(0; 0). Em hãy chọn điểm thử khác ngoài ${lineLabel} (VD: <code>(1; 0)</code> hoặc <code>(0; 1)</code>).`;
+            this.els.quickOriginBtn.style.display = 'none';
+          }
+
+          this.els.mXInput.value = '';
+          this.els.mYInput.value = '';
+          this.els.mXInput.disabled = false;
+          this.els.mYInput.disabled = false;
+          this.els.checkTestPointBtn.disabled = false;
+
+          this.els.testPointBox.className = 'point-box active-test-point';
+          this.els.testPointStatusTag.className = 'point-status-tag waiting-amber';
+          this.els.testPointStatusTag.textContent = 'Đang chọn điểm thử';
+
+          this.hideFeedback(this.els.testPointFeedback);
+          this.hideFeedback(this.els.step2ConfirmFeedback);
+          this.els.substitutionCard.classList.remove('show');
+          this.els.finalCompleteCard.classList.remove('show');
+          this.els.nextSystemIneqRow.style.display = 'none';
+
+          this.els.step2Section.classList.add('show');
+          this.els.coordCanvas.classList.add('picking-mode');
+
+          this.updateCanvasStatus(
+            'picking',
+            `Bước 2.1: Chọn điểm thử M(x₀; y₀) KHÔNG thuộc đường thẳng ${lineLabel}: ${lineEq}`
+          );
+
+          this.scrollToElement(this.els.step2Section);
+          this.els.mXInput.focus();
+          this.plane.render();
+        },
+
+        validateTestPoint() {
+          if (AppState.step !== 'STEP2_PICK_POINT' && AppState.step !== 'STEP2_CONFIRM') return;
+
+          const parsedX = MathUtils.parseNumber(this.els.mXInput.value);
+          const parsedY = MathUtils.parseNumber(this.els.mYInput.value);
+
+          if (!parsedX.valid) {
+            this.showFeedback(this.els.testPointFeedback, 'error', `<strong>Hoành độ x₀ chưa hợp lệ:</strong> ${parsedX.error}`);
+            return;
+          }
+          if (!parsedY.valid) {
+            this.showFeedback(this.els.testPointFeedback, 'error', `<strong>Tung độ y₀ chưa hợp lệ:</strong> ${parsedY.error}`);
+            return;
+          }
+
+          const x0 = parsedX.value;
+          const y0 = parsedY.value;
+          const { a, b, op, c } = AppState.inequality;
+          const lineLabel = this.getCurrentLineLabel();
+          const sub = MathUtils.formatSubstitution(a, b, x0, y0, parsedX.display, parsedY.display);
+          const cStr = MathUtils.formatNumber(c);
+          const diff = Math.abs(sub.lhsVal - c);
+
+          if (diff < EPSILON) {
+            AppState.step = 'STEP2_PICK_POINT';
+            AppState.points.testPoint = null;
+            AppState.invalidMarker = {
+              x: x0,
+              y: y0,
+              label: `(${parsedX.display}; ${parsedY.display}) ∈ ${lineLabel}`
+            };
+            this.els.substitutionCard.classList.remove('show');
+
+            this.showFeedback(
+              this.els.testPointFeedback,
+              'error',
+              `
+                <div><strong>Điểm này thuộc đường thẳng ranh giới, không thể làm điểm thử. Hãy chọn điểm khác!</strong></div>
+                <div class="math-calc-line">Vì ${sub.expr} = ${cStr} nên (${parsedX.display}; ${parsedY.display}) nằm trên bờ ${lineLabel}.</div>
+              `
+            );
+            this.plane.render();
+            return;
+          }
+
+          AppState.invalidMarker = null;
+          AppState.points.testPoint = { x: x0, y: y0, displayX: parsedX.display, displayY: parsedY.display };
+          AppState.step = 'STEP2_CONFIRM';
+
+          this.showFeedback(
+            this.els.testPointFeedback,
+            'success',
+            `<div>Đã chọn điểm thử <strong>M(${parsedX.display}; ${parsedY.display})</strong> nằm ngoài đường thẳng <strong>${lineLabel}</strong>.</div>`
+          );
+
+          this.els.testPointStatusTag.className = 'point-status-tag done';
+          this.els.testPointStatusTag.textContent = `✓ M(${parsedX.display}; ${parsedY.display})`;
+
+          const ineqStr = MathUtils.formatInequality(a, b, op, c);
+          this.els.subPointLabel.textContent = `M(${parsedX.display}; ${parsedY.display})`;
+          this.els.subIneqLabel.textContent = ineqStr;
+          this.els.subExpressionBox.textContent = `${sub.rawProductExpr}   ...   ${cStr}`;
+          this.els.subOpSymbol.textContent = MathUtils.opToSymbol(op);
+
+          this.hideFeedback(this.els.step2ConfirmFeedback);
+          this.els.btnConfirmSatisfy.disabled = false;
+          this.els.btnConfirmNotSatisfy.disabled = false;
+          this.els.substitutionCard.classList.add('show');
+          this.scrollToElement(this.els.substitutionCard);
+
+          this.updateCanvasStatus(
+            'picking',
+            `Bước 2.2: Thay M(${parsedX.display}; ${parsedY.display}) vào ${ineqStr} và bấm xác nhận bên trái`
+          );
+
+          this.plane.render();
+        },
+
+        verifyStudentConfirmation(studentSaysSatisfies) {
+          if (AppState.step !== 'STEP2_CONFIRM' || !AppState.points.testPoint) return;
+
+          const { a, b, op, c } = AppState.inequality;
+          const m = AppState.points.testPoint;
+          const sub = MathUtils.formatSubstitution(a, b, m.x, m.y, m.displayX, m.displayY);
+          const cStr = MathUtils.formatNumber(c);
+          const opSym = MathUtils.opToSymbol(op);
+
+          const actualSatisfies = MathUtils.doesPointSatisfy(a, b, op, c, m.x, m.y);
+
+          if (studentSaysSatisfies !== actualSatisfies) {
+            this.showFeedback(
+              this.els.step2ConfirmFeedback,
+              'error',
+              `
+                <div><strong>Chưa chính xác!</strong> Em hãy tính lại giá trị vế trái <code>${sub.rawProductExpr}</code> rồi so sánh với vế phải <code>c = ${cStr}</code> theo dấu <strong>"${opSym}"</strong> của bất phương trình và chọn lại nhé!</div>
+              `
+            );
+            return;
+          }
+
+          AppState.step = 'STEP2_DONE';
+          AppState.hoverSnapPoint = null;
+
+          if (AppState.mode === 'system') {
+            const sysItem = AppState.systemList[AppState.activeSystemIndex];
+            sysItem.doneStep2 = true;
+            sysItem.testPoint = AppState.points.testPoint;
+            this.renderSystemProgressStrip();
+          }
+
+          const cmpRelation = sub.lhsVal < c ? '<' : '>';
+          const satisfyText = actualSatisfies ? 'THỎA MÃN' : 'KHÔNG THỎA MÃN';
+          const lineLabel = this.getCurrentLineLabel();
+
+          this.showFeedback(
+            this.els.step2ConfirmFeedback,
+            'success',
+            `
+              <div><strong>Chính xác!</strong> Thay <strong>M(${m.displayX}; ${m.displayY})</strong> vào vế trái ta được:</div>
+              <div class="math-calc-line">VT = ${sub.expr} ${cmpRelation} ${cStr} (Vế phải)</div>
+              <div style="margin-top: 4px;">Điểm thử <strong>M(${m.displayX}; ${m.displayY}) ${satisfyText}</strong> bất phương trình <strong>${MathUtils.formatInequality(a, b, op, c)}</strong>.</div>
+            `
+          );
+
+          this.els.mXInput.disabled = true;
+          this.els.mYInput.disabled = true;
+          this.els.checkTestPointBtn.disabled = true;
+          this.els.btnConfirmSatisfy.disabled = true;
+          this.els.btnConfirmNotSatisfy.disabled = true;
+          this.els.testPointBox.className = 'point-box completed-point';
+
+          this.els.pillStep1.className = 'step-pill completed';
+          this.els.pillStep2.className = 'step-pill completed';
+          this.updateTopStepper();
+
+          // Nếu đang ở chế độ Hệ BPT:
+          if (AppState.mode === 'system') {
+            const isLast = AppState.activeSystemIndex >= AppState.systemList.length - 1;
+            if (isLast) {
+              this.enterStep3SystemResult();
+              return;
+            } else {
+              const nextIdx = AppState.activeSystemIndex + 1;
+              const nextIneq = AppState.systemList[nextIdx];
+              const nextEqStr = MathUtils.formatInequality(nextIneq.a, nextIneq.b, nextIneq.op, nextIneq.c);
+              this.els.finalCompleteTitle.textContent = `Đã hoàn thành BPT (${AppState.activeSystemIndex + 1}/${AppState.systemList.length}): ${lineLabel}!`;
+              this.els.finalCompleteSummary.innerHTML = `
+                Đã vẽ đường bờ <strong>${lineLabel}</strong> và gạch chéo bỏ nửa mặt phẳng không thỏa mãn bất phương trình <strong>${MathUtils.formatInequality(a, b, op, c)}</strong>.
+              `;
+              this.els.nextSystemIneqBtn.textContent = `Tiếp tục sang BPT (${nextIdx + 1}): d${nextIdx + 1} (${nextEqStr}) →`;
+              this.els.nextSystemIneqRow.style.display = 'flex';
+              this.els.finalCompleteCard.classList.add('show');
+              this.scrollToElement(this.els.finalCompleteCard);
+
+              this.els.coordCanvas.classList.remove('picking-mode');
+              this.updateCanvasStatus(
+                'done',
+                `Hoàn thành ${lineLabel}! Bấm "Tiếp tục sang BPT (${nextIdx + 1})" để vẽ bất phương trình tiếp theo.`
+              );
+              this.plane.render();
+              return;
+            }
+          }
+
+          // Chế độ Bất phương trình đơn
+          const isStrict = (op === '<' || op === '>');
+          const boundaryInclusion = isStrict
+            ? '<strong>không kể</strong> đường thẳng bờ <strong>d</strong> (vẽ nét đứt)'
+            : '<strong>kể cả</strong> đường thẳng bờ <strong>d</strong> (vẽ nét liền)';
+          const solutionSideDesc = actualSatisfies
+            ? `nửa mặt phẳng bờ <strong>d</strong> <strong>chứa điểm thử M(${m.displayX}; ${m.displayY})</strong>`
+            : `nửa mặt phẳng bờ <strong>d</strong> <strong>không chứa điểm thử M(${m.displayX}; ${m.displayY})</strong>`;
+          const eliminatedSideDesc = actualSatisfies
+            ? `nửa mặt phẳng không chứa điểm M(${m.displayX}; ${m.displayY})`
+            : `nửa mặt phẳng chứa điểm M(${m.displayX}; ${m.displayY})`;
+
+          this.els.finalCompleteTitle.textContent = 'Hoàn thành biểu diễn miền nghiệm của bất phương trình!';
+          this.els.finalCompleteSummary.innerHTML = `
+            <div>• Theo quy ước SGK Toán 10, ta đã <strong>tô gạch chéo bỏ đi</strong> ${eliminatedSideDesc} (miền sai).</div>
+            <div style="margin-top: 4px;">• <strong>Kết luận:</strong> Miền nghiệm của <strong>${MathUtils.formatInequality(a, b, op, c)}</strong> là <strong>phần mặt phẳng để trắng</strong> (${solutionSideDesc}), ${boundaryInclusion}.</div>
+          `;
+          this.els.nextSystemIneqRow.style.display = 'none';
+          this.els.finalCompleteCard.classList.add('show');
+          this.scrollToElement(this.els.finalCompleteCard);
+
+          this.els.coordCanvas.classList.remove('picking-mode');
+          this.updateCanvasStatus(
+            'done',
+            `Hoàn thành! Đã gạch bỏ miền sai — Phần mặt phẳng để trắng là miền nghiệm của ${MathUtils.formatInequality(a, b, op, c)}`
+          );
+
+          this.plane.render();
+        },
+
+        /* =====================================================================
+         * BƯỚC 3: TÍNH MIỀN GIAO & TÌM TỌA ĐỘ ĐỈNH ĐA GIÁC (HỆ BPT)
+         * ===================================================================== */
+        enterStep3SystemResult() {
+          const result = MathUtils.computeSystemSolution(AppState.systemList);
+          AppState.systemResult = result;
+          AppState.step = 'STEP3_SYSTEM_RESULT';
+          AppState.points.p1 = null;
+          AppState.points.p2 = null;
+          AppState.points.testPoint = null;
+          AppState.invalidMarker = null;
+          AppState.hoverSnapPoint = null;
+
+          this.els.step1Container.style.display = 'none';
+          this.els.step3Section.classList.add('show');
+          this.els.coordCanvas.classList.remove('picking-mode');
+
+          this.els.pillStep1.className = 'step-pill completed';
+          this.els.pillStep2.className = 'step-pill completed';
+          this.els.pillStep3.className = 'step-pill active';
+
+          this.renderSystemProgressStrip();
+          this.updateTopStepper();
+
+          const banner = this.els.step3ResultBanner;
+          this.els.vertexAllDoneCard.classList.remove('show');
+          this.els.vertexAllDoneCard.innerHTML = '';
+
+          if (result.type === 'empty') {
+            banner.className = 'step3-result-banner case-empty';
+            banner.innerHTML = `
+              <div style="font-weight: 700; font-size: 0.94rem; margin-bottom: 4px;">
+                ✕ Hệ bất phương trình vô nghiệm (không có miền giao chung)
+              </div>
+              <div>Toàn bộ mặt phẳng tọa độ đã bị gạch chéo bỏ đi — không tồn tại điểm (x; y) nào đồng thời thỏa mãn tất cả các bất phương trình trong hệ.</div>
+            `;
+            this.els.step3VertexPanel.style.display = 'none';
+            this.els.fitSolutionViewBtn.style.display = 'none';
+            this.els.pillStep3.className = 'step-pill completed';
+            this.updateCanvasStatus('error', 'Bước 3: Hệ bất phương trình vô nghiệm (không có miền giao chung)');
+            this.plane.render();
+          } else if (result.type === 'unbounded') {
+            banner.className = 'step3-result-banner case-unbounded';
+            const extraNote = result.degenerateLine
+              ? 'Miền giao chung suy biến thành một đường thẳng/tia vô hạn (hai nửa mặt phẳng ngược chiều có chung bờ), không tạo thành đa giác kín.'
+              : 'Vùng tô màu xanh lục nổi bật trên đồ thị là phần miền giao chung của hệ trong khung nhìn hiện tại. Vì miền này trải dài ra vô cùng nên không tạo thành đa giác kín.';
+            banner.innerHTML = `
+              <div style="font-weight: 700; font-size: 0.94rem; margin-bottom: 4px;">
+                ∞ Miền nghiệm của hệ là miền không bị chặn (không tạo thành đa giác kín)
+              </div>
+              <div>${extraNote}</div>
+            `;
+            this.els.step3VertexPanel.style.display = 'none';
+            this.els.fitSolutionViewBtn.style.display = 'none';
+            this.els.pillStep3.className = 'step-pill completed';
+            this.updateCanvasStatus('done', 'Bước 3: Miền nghiệm của hệ là miền không bị chặn (không tạo thành đa giác kín)');
+            this.plane.render();
+          } else if (result.type === 'degenerate_point') {
+            const ptDesc = result.polygon.map((p) => `(${MathUtils.formatExactRational(p.x)}; ${MathUtils.formatExactRational(p.y)})`).join(' — ');
+            banner.className = 'step3-result-banner case-unbounded';
+            banner.innerHTML = `
+              <div style="font-weight: 700; font-size: 0.94rem; margin-bottom: 4px;">
+                • Miền nghiệm suy biến (${result.polygon.length === 1 ? '1 điểm duy nhất' : 'đoạn thẳng'}) — không tạo thành đa giác kín
+              </div>
+              <div>Miền giao chung chỉ gồm ${result.polygon.length === 1 ? 'điểm' : 'đoạn thẳng nối'}: <strong>${ptDesc}</strong>.</div>
+            `;
+            this.els.step3VertexPanel.style.display = 'none';
+            this.els.fitSolutionViewBtn.style.display = 'none';
+            this.els.pillStep3.className = 'step-pill completed';
+            this.updateCanvasStatus('done', `Bước 3: Miền nghiệm suy biến (${ptDesc})`);
+            this.plane.render();
+          } else {
+            // Trường hợp C: Đa giác kín!
+            const n = result.vertices.length;
+            const vertexNames = result.vertices.map((v) => v.name).join('');
+            banner.className = 'step3-result-banner case-bounded';
+            banner.innerHTML = `
+              <div style="font-weight: 700; font-size: 0.94rem; margin-bottom: 4px;">
+                ✓ Miền nghiệm của hệ là đa giác kín ${vertexNames} (${n} đỉnh)
+              </div>
+              <div>Toàn bộ miền đa giác giao đã được tô màu xanh nổi bật trên mặt phẳng tọa độ cùng tên các đỉnh <strong>${result.vertices.map((v) => v.name).join(', ')}</strong> theo thứ tự ngược chiều kim đồng hồ.</div>
+            `;
+            this.els.step3VertexPanel.style.display = 'block';
+            this.els.fitSolutionViewBtn.style.display = 'inline-flex';
+
+            this.renderStep3VertexCards(result.vertices);
+            this.updateCanvasStatus(
+              'picking',
+              `Bước 3: Đã tô miền đa giác kín ${vertexNames}. Em hãy giải hệ phương trình để tìm tọa độ ${n} đỉnh bên trái!`
+            );
+
+            const didAutoFit = this.plane.autoFitIfOutOfView(result.vertices);
+            if (!didAutoFit) {
+              this.plane.render();
+            }
+          }
+          this.scrollToElement(this.els.step3Section);
+        },
+
+        renderStep3VertexCards(vertices) {
+          const listEl = this.els.vertexCardsList;
+          listEl.innerHTML = '';
+          this.updateVertexProgressBadge();
+
+          vertices.forEach((v, idx) => {
+            const l1 = AppState.systemList[v.line1Idx];
+            const l2 = AppState.systemList[v.line2Idx];
+            const d1Name = v.line1Idx >= 0 ? `d${v.line1Idx + 1}` : '?';
+            const d2Name = v.line2Idx >= 0 ? `d${v.line2Idx + 1}` : '?';
+            const p1Color = SYSTEM_PALETTE[Math.max(0, v.line1Idx) % SYSTEM_PALETTE.length].line;
+            const p2Color = SYSTEM_PALETTE[Math.max(0, v.line2Idx) % SYSTEM_PALETTE.length].line;
+
+            const card = document.createElement('div');
+            card.className = 'vertex-card';
+            card.id = `vertexCard_${idx}`;
+
+            card.innerHTML = `
+              <div class="vertex-card-top">
+                <div class="vertex-name-group">
+                  <span class="point-marker-badge marker-v">${v.name}</span>
+                  <span>Đỉnh ${v.name} = ${d1Name} ∩ ${d2Name}</span>
+                </div>
+                <span id="vertexTag_${idx}" class="point-status-tag waiting">Chưa kiểm tra</span>
+              </div>
+              <div class="vertex-eq-pair">
+                <div class="vertex-eq-line">
+                  <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${p1Color};"></span>
+                  <span><strong>${d1Name}:</strong> ${l1 ? MathUtils.formatLineEquation(l1.a, l1.b, l1.c) : ''}</span>
+                </div>
+                <div class="vertex-eq-line">
+                  <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${p2Color};"></span>
+                  <span><strong>${d2Name}:</strong> ${l2 ? MathUtils.formatLineEquation(l2.a, l2.b, l2.c) : ''}</span>
+                </div>
+              </div>
+              <div class="coord-inputs-grid">
+                <label class="coord-field">
+                  <span class="coord-label">x =</span>
+                  <input id="vxInput_${idx}" class="coord-input" type="text" placeholder="VD: 5/3" autocomplete="off" />
+                </label>
+                <label class="coord-field">
+                  <span class="coord-label">y =</span>
+                  <input id="vyInput_${idx}" class="coord-input" type="text" placeholder="VD: 5/3" autocomplete="off" />
+                </label>
+                <button id="vCheckBtn_${idx}" type="button" class="btn btn-primary" style="padding: 7px 11px;">
+                  Kiểm tra
+                </button>
+              </div>
+              <div id="vFeedback_${idx}" class="feedback-box" role="alert"></div>
+            `;
+
+            listEl.appendChild(card);
+
+            const xInput = card.querySelector(`#vxInput_${idx}`);
+            const yInput = card.querySelector(`#vyInput_${idx}`);
+            const checkBtn = card.querySelector(`#vCheckBtn_${idx}`);
+
+            const triggerCheck = () => this.validateVertexCoordinate(idx);
+            checkBtn.addEventListener('click', triggerCheck);
+            xInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') triggerCheck(); });
+            yInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') triggerCheck(); });
+          });
+        },
+
+        validateVertexCoordinate(idx) {
+          if (!AppState.systemResult || AppState.systemResult.type !== 'bounded') return;
+          const v = AppState.systemResult.vertices[idx];
+          if (!v || v.verified) return;
+
+          const xInput = document.getElementById(`vxInput_${idx}`);
+          const yInput = document.getElementById(`vyInput_${idx}`);
+          const checkBtn = document.getElementById(`vCheckBtn_${idx}`);
+          const tagEl = document.getElementById(`vertexTag_${idx}`);
+          const fbEl = document.getElementById(`vFeedback_${idx}`);
+          const cardEl = document.getElementById(`vertexCard_${idx}`);
+
+          const px = MathUtils.parseNumber(xInput.value);
+          const py = MathUtils.parseNumber(yInput.value);
+
+          if (!px.valid) {
+            this.showFeedback(fbEl, 'error', `<strong>Hoành độ x của đỉnh ${v.name} chưa hợp lệ:</strong> ${px.error}`);
+            return;
+          }
+          if (!py.valid) {
+            this.showFeedback(fbEl, 'error', `<strong>Tung độ y của đỉnh ${v.name} chưa hợp lệ:</strong> ${py.error}`);
+            return;
+          }
+
+          const errX = Math.abs(px.value - v.x);
+          const errY = Math.abs(py.value - v.y);
+
+          if (errX > VERTEX_TOLERANCE || errY > VERTEX_TOLERANCE) {
+            const d1Name = `d${v.line1Idx + 1}`;
+            const d2Name = `d${v.line2Idx + 1}`;
+            this.showFeedback(
+              fbEl,
+              'error',
+              `<strong>Tọa độ đỉnh ${v.name} chưa chính xác!</strong> Em hãy giải lại hệ phương trình bậc nhất hai ẩn gồm <strong>${d1Name}</strong> và <strong>${d2Name}</strong> rồi nhập lại tọa độ (x; y) nhé!`
+            );
+            return;
+          }
+
+          // ĐÚNG!
+          v.verified = true;
+          cardEl.classList.add('verified');
+          xInput.disabled = true;
+          yInput.disabled = true;
+          checkBtn.disabled = true;
+
+          tagEl.className = 'point-status-tag done';
+          tagEl.textContent = `✓ ${v.name}(${v.displayX}; ${v.displayY})`;
+
+          this.showFeedback(
+            fbEl,
+            'success',
+            `<strong>Chính xác!</strong> Đỉnh <strong>${v.name}(${v.displayX}; ${v.displayY})</strong> đã được đánh dấu tọa độ trên mặt phẳng tọa độ Oxy.`
+          );
+
+          this.updateVertexProgressBadge();
+          this.plane.render();
+        },
+
+        updateVertexProgressBadge() {
+          if (!AppState.systemResult || AppState.systemResult.type !== 'bounded') return;
+          const verts = AppState.systemResult.vertices;
+          const verifiedCount = verts.filter((v) => v.verified).length;
+          const total = verts.length;
+
+          this.els.vertexProgressBadge.textContent = `${verifiedCount} / ${total} đỉnh`;
+          const allDone = verifiedCount === total && total > 0;
+          this.els.vertexProgressBadge.classList.toggle('all-done', allDone);
+          this.updateTopStepper();
+
+          if (allDone) {
+            this.els.pillStep3.className = 'step-pill completed';
+            const listHtml = verts
+              .map((v) => `<strong>${v.name}(${v.displayX}; ${v.displayY})</strong>`)
+              .join(', ');
+            this.els.vertexAllDoneCard.innerHTML = `
+              <div style="font-weight: 700; font-size: 0.94rem; margin-bottom: 5px;">
+                🎉 Xuất sắc! Em đã hoàn thành toàn bộ bài toán Hệ bất phương trình!
+              </div>
+              <div>Miền nghiệm của hệ là đa giác <strong>${verts.map((v) => v.name).join('')}</strong> với tọa độ các đỉnh lần lượt là: ${listHtml}.</div>
+            `;
+            this.els.vertexAllDoneCard.classList.add('show');
+            this.scrollToElement(this.els.vertexAllDoneCard);
+            this.updateCanvasStatus(
+              'done',
+              `Hoàn thành xuất sắc! Đã tìm đúng tất cả ${total} đỉnh của đa giác miền nghiệm ${verts.map((v) => v.name).join('')}`
+            );
+          }
+        },
+
+        updateCanvasStatus(state, message) {
+          this.els.canvasStatusText.textContent = message;
+          this.els.canvasStatusDot.className = 'status-pulse';
+          if (state === 'picking') this.els.canvasStatusDot.classList.add('picking');
+          else if (state === 'done') this.els.canvasStatusDot.classList.add('done');
+          else if (state === 'error') this.els.canvasStatusDot.classList.add('error');
+        },
+
+        resetAll(options = {}) {
+          AppState.step = 'IDLE';
+          AppState.points.p1 = null;
+          AppState.points.p2 = null;
+          AppState.points.testPoint = null;
+          AppState.invalidMarker = null;
+          AppState.hoverSnapPoint = null;
+          AppState.systemList = [];
+          AppState.activeSystemIndex = 0;
+          AppState.systemResult = null;
+
+          this.hideFeedback(this.els.coeffFeedback);
+          this.hideFeedback(this.els.systemFormFeedback);
+          this.hideFeedback(this.els.point1Feedback);
+          this.hideFeedback(this.els.point2Feedback);
+          this.hideFeedback(this.els.testPointFeedback);
+          this.hideFeedback(this.els.step2ConfirmFeedback);
+
+          this.renderSystemProgressStrip();
+          this.els.step1Container.style.display = 'none';
+          this.els.step1CompactDone.classList.remove('show');
+          this.els.step2Section.classList.remove('show');
+          this.els.substitutionCard.classList.remove('show');
+          this.els.finalCompleteCard.classList.remove('show');
+          this.els.step3Section.classList.remove('show');
+
+          this.els.idleGuidePrompt.style.display = 'block';
+          this.els.idleGuidePrompt.innerHTML = AppState.mode === 'single'
+            ? 'Hãy nhập các hệ số <strong>a, b, c</strong> và dấu bất phương trình ở trên, sau đó bấm <strong>"Bắt đầu vẽ"</strong> để bắt đầu xác định miền nghiệm theo chuẩn SGK Toán 10.'
+            : 'Hãy nhập từ <strong>2 đến 6 bất phương trình</strong> ở khung trên (hoặc chọn 1 hệ mẫu), sau đó bấm <strong>"Bắt đầu thực hiện hệ"</strong> để lần lượt vẽ từng bất phương trình và tìm đỉnh đa giác miền nghiệm.';
+
+          this.els.pillStep1.className = 'step-pill active';
+          this.els.pillStep2.className = 'step-pill';
+          this.els.pillStep3.className = 'step-pill';
+          this.updateTopStepper();
+
+          this.els.coordCanvas.classList.remove('picking-mode');
+          this.updateCanvasStatus(
+            'idle',
+            AppState.mode === 'single'
+              ? 'Sẵn sàng: Nhập bất phương trình và bấm "Bắt đầu vẽ"'
+              : 'Sẵn sàng: Thiết lập hệ bất phương trình (2–6 BPT) và bấm "Bắt đầu thực hiện hệ"'
+          );
+          if (options.resetView) {
+            this.plane.resetView();
+          } else {
+            this.plane.render();
+          }
+        }
+      };
+
+      window.addEventListener('DOMContentLoaded', () => {
+        UIController.init();
+      });
+    })();
+  </script>
+</body>
+</html>
